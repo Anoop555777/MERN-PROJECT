@@ -37,6 +37,7 @@ const cabinSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
+    select: false,
   },
   slug: String,
   imageCover: String,

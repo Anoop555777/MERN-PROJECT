@@ -1,1 +1,128 @@
-[{}]
+[
+  {
+    "ratingAverage": 4.5,
+    "ratingQuantity": 0,
+    "images": [
+      "data/img/cabin/cabin-001.jpg",
+      "data/img/cabin/cabin-002.jpg",
+      "data/img/cabin/cabin-003.jpg"
+    ],
+    "createdAt": "2023-11-04T18:16:03.222Z",
+    "_id": "65468b1e52680f08683bb4f1",
+    "name": "Whispering Pines",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda eveniet nam tempora, voluptates iure consectetur ipsam doloribus unde, amet aperiam atque. Explicabo iure, tenetur commodi dolorum autem reiciendis a!",
+    "maxCapacity": 4,
+    "price": 32000,
+    "priceDiscount": 2300,
+    "imageCover": "data/img/cabin/cover-image-1.jpg",
+    "__v": 0
+  },
+  {
+    "ratingAverage": 0,
+    "ratingQuantity": 0,
+    "images": [
+      "data/img/cabin/cabin-004.jpg",
+      "data/img/cabin/cabin-005.jpg",
+      "data/img/cabin/cabin-006.jpg"
+    ],
+    "createdAt": "2023-11-04T18:20:24.560Z",
+    "_id": "65468bdd2708d301683e181c",
+    "name": "Hill Camp",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda eveniet nam tempora, voluptates iure consectetur ipsam doloribus unde, amet aperiam atque. Explicabo iure, tenetur commodi dolorum autem reiciendis a!",
+    "maxCapacity": 5,
+    "price": 42000,
+    "priceDiscount": 5000,
+    "imageCover": "data/img/cabin/cover-image-2.jpg",
+    "__v": 0
+  },
+  {
+    "ratingAverage": 0,
+    "ratingQuantity": 0,
+    "images": [
+      "data/img/cabin/cabin-007.jpg",
+      "data/img/cabin/cabin-008.jpg",
+      "data/img/cabin/cabin-009.jpg"
+    ],
+    "createdAt": "2023-11-04T18:20:24.560Z",
+    "_id": "65468c182708d301683e181e",
+    "name": "Haven Woods",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda eveniet nam tempora, voluptates iure consectetur ipsam doloribus unde, amet aperiam atque. Explicabo iure, tenetur commodi dolorum autem reiciendis a!",
+    "maxCapacity": 7,
+    "price": 52000,
+    "priceDiscount": 5500,
+    "imageCover": "data/img/cabin/cover-image-3.jpg",
+    "__v": 0
+  },
+  {
+    "ratingAverage": 0,
+    "ratingQuantity": 0,
+    "images": [
+      "data/img/cabin/cabin-010.jpg",
+      "data/img/cabin/cabin-011.jpg",
+      "data/img/cabin/cabin-012.jpg"
+    ],
+    "createdAt": "2023-11-04T18:20:24.560Z",
+    "_id": "65468c4e2708d301683e1820",
+    "name": "Carnation Cabin",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda eveniet nam tempora, voluptates iure consectetur ipsam doloribus unde, amet aperiam atque. Explicabo iure, tenetur commodi dolorum autem reiciendis a!",
+    "maxCapacity": 4,
+    "price": 22000,
+    "priceDiscount": 2000,
+    "imageCover": "data/img/cabin/cover-image-4.jpg",
+    "__v": 0
+  },
+  {
+    "ratingAverage": 0,
+    "ratingQuantity": 0,
+    "images": [
+      "data/img/cabin/cabin-013.jpg",
+      "data/img/cabin/cabin-014.jpg",
+      "data/img/cabin/cabin-015.jpg"
+    ],
+    "createdAt": "2023-11-04T18:20:24.560Z",
+    "_id": "65468c792708d301683e1822",
+    "name": "August Cottage",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda eveniet nam tempora, voluptates iure consectetur ipsam doloribus unde, amet aperiam atque. Explicabo iure, tenetur commodi dolorum autem reiciendis a!",
+    "maxCapacity": 10,
+    "price": 72000,
+    "priceDiscount": 8800,
+    "imageCover": "data/img/cabin/cover-image-5.jpg",
+    "__v": 0
+  },
+  {
+    "ratingAverage": 0,
+    "ratingQuantity": 0,
+    "images": [
+      "data/img/cabin/cabin-016.jpg",
+      "data/img/cabin/cabin-017.jpg",
+      "data/img/cabin/cabin-018.jpg"
+    ],
+    "createdAt": "2023-11-04T18:20:24.560Z",
+    "_id": "65468cc52708d301683e1824",
+    "name": "Deluxe Cabin",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda eveniet nam tempora, voluptates iure consectetur ipsam doloribus unde, amet aperiam atque. Explicabo iure, tenetur commodi dolorum autem reiciendis a!",
+    "maxCapacity": 7,
+    "price": 82000,
+    "priceDiscount": 10000,
+    "imageCover": "data/img/cabin/cover-image-6.jpg",
+    "__v": 0
+  },
+  {
+    "ratingAverage": 0,
+    "ratingQuantity": 0,
+    "images": [
+      "data/img/cabin/cabin-017.jpg",
+      "data/img/cabin/cabin-018.jpg",
+      "data/img/cabin/cabin-019.jpg"
+    ],
+    "createdAt": "2023-11-04T18:20:24.560Z",
+    "_id": "65468d1a2708d301683e1826",
+    "name": "Fire Lodge",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda eveniet nam tempora, voluptates iure consectetur ipsam doloribus unde, amet aperiam atque. Explicabo iure, tenetur commodi dolorum autem reiciendis a!",
+    "maxCapacity": 8,
+    "price": 42000,
+    "priceDiscount": 2440,
+    "imageCover": "data/img/cabin/cover-image-7.jpg",
+    "__v": 0
+  }
+]

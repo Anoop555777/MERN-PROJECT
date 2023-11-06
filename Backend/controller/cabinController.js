@@ -1,5 +1,5 @@
 const Cabin = require("./../models/cabinModel");
-
+const APIFeatures = require("./../utils/apiFeatures");
 exports.createCabin = async function (req, res) {
   try {
     const cabin = await Cabin.create(req.body);
@@ -19,9 +19,16 @@ exports.createCabin = async function (req, res) {
 
 exports.getAllCabins = async function (req, res) {
   try {
-    const cabins = await Cabin.find();
+    const features = new APIFeatures(Cabin.find(), req.query)
+      .filter()
+      .sort()
+      .field()
+      .pagination();
+
+    const cabins = await features.query;
     res.status(200).json({
       status: "success",
+      result: cabins.length,
       data: {
         cabins,
       },
@@ -72,18 +79,16 @@ exports.updateCabin = async function (req, res) {
 };
 
 exports.deleteCabin = async function (req, res, next) {
-  exports.getCabin = async function (req, res) {
-    try {
-      const cabin = await Cabin.findByIdAndDelete(req.params.id);
-      res.status(201).json({
-        status: "success",
-        data: null,
-      });
-    } catch (err) {
-      res.status(404).json({
-        status: "fail",
-        message: err,
-      });
-    }
-  };
+  try {
+    const cabin = await Cabin.findByIdAndDelete(req.params.id);
+    res.status(201).json({
+      status: "success",
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
 };
