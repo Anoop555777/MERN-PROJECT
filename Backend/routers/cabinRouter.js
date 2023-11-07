@@ -6,6 +6,8 @@ router
   .get(cabinController.getAllCabins)
   .post(cabinController.createCabin);
 
+router.route("/stats").get(cabinController.stats);
+
 router
   .route("/:id")
   .delete(cabinController.deleteCabin)

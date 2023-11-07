@@ -92,3 +92,35 @@ exports.deleteCabin = async function (req, res, next) {
     });
   }
 };
+
+exports.stats = async function (req, res, next) {
+  try {
+    const stats = await Cabin.aggregate([
+      {
+        $match: { maxCapacity: { $gte: 5 } },
+      },
+      {
+        $group: {
+          _id: null,
+          minPrice: { $min: "$price" },
+          maxPrice: { $max: "$price" },
+          avgPrice: { $avg: "$price" },
+          numOfCabin: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { avgPrice: 1 },
+      },
+    ]);
+
+    res.status(200).json({
+      status: "success",
+      data: stats,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
