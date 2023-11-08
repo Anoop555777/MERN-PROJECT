@@ -10,6 +10,7 @@ router.route("/stats").get(cabinController.stats);
 
 router
   .route("/:id")
+  .get(cabinController.getCabin)
   .delete(cabinController.deleteCabin)
   .patch(cabinController.updateCabin);
 module.exports = router;

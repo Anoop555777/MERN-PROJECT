@@ -1,126 +1,86 @@
 const Cabin = require("./../models/cabinModel");
 const APIFeatures = require("./../utils/apiFeatures");
-exports.createCabin = async function (req, res) {
-  try {
-    const cabin = await Cabin.create(req.body);
-    res.status(201).json({
-      status: "success",
-      data: {
-        cabin,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+const catchAsync = require("./../utils/catchAsync");
 
-exports.getAllCabins = async function (req, res) {
-  try {
-    const features = new APIFeatures(Cabin.find(), req.query)
-      .filter()
-      .sort()
-      .field()
-      .pagination();
+exports.createCabin = catchAsync(async function (req, res, next) {
+  const cabin = await Cabin.create(req.body);
+  res.status(201).json({
+    status: "success",
+    data: {
+      cabin,
+    },
+  });
+});
 
-    const cabins = await features.query;
-    res.status(200).json({
-      status: "success",
-      result: cabins.length,
-      data: {
-        cabins,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+exports.getAllCabins = catchAsync(async function (req, res, next) {
+  const features = new APIFeatures(Cabin.find(), req.query)
+    .filter()
+    .sort()
+    .field()
+    .pagination();
 
-exports.getCabin = async function (req, res) {
-  try {
-    const cabin = await Cabin.findById(req.params.id);
-    res.status(200).json({
-      status: "success",
-      data: {
-        cabin,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  const cabins = await features.query;
+  res.status(200).json({
+    status: "success",
+    result: cabins.length,
+    data: {
+      cabins,
+    },
+  });
+});
 
-exports.updateCabin = async function (req, res) {
-  try {
-    const cabin = await Cabin.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    res.status(200).json({
-      status: "success",
-      data: {
-        cabin,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+exports.getCabin = catchAsync(async function (req, res, next) {
+  const cabin = await Cabin.findById(req.params.id);
+  res.status(200).json({
+    status: "success",
+    data: {
+      cabin,
+    },
+  });
+});
 
-exports.deleteCabin = async function (req, res, next) {
-  try {
-    const cabin = await Cabin.findByIdAndDelete(req.params.id);
-    res.status(201).json({
-      status: "success",
-      data: null,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+exports.updateCabin = catchAsync(async function (req, res, next) {
+  const cabin = await Cabin.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  res.status(200).json({
+    status: "success",
+    data: {
+      cabin,
+    },
+  });
+});
 
-exports.stats = async function (req, res, next) {
-  try {
-    const stats = await Cabin.aggregate([
-      {
-        $match: { maxCapacity: { $gte: 5 } },
-      },
-      {
-        $group: {
-          _id: null,
-          minPrice: { $min: "$price" },
-          maxPrice: { $max: "$price" },
-          avgPrice: { $avg: "$price" },
-          numOfCabin: { $sum: 1 },
-        },
-      },
-      {
-        $sort: { avgPrice: 1 },
-      },
-    ]);
+exports.deleteCabin = catchAsync(async function (req, res, next) {
+  const cabin = await Cabin.findByIdAndDelete(req.params.id);
+  res.status(201).json({
+    status: "success",
+    data: null,
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      data: stats,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+exports.stats = catchAsync(async function (req, res, next) {
+  const stats = await Cabin.aggregate([
+    {
+      $match: { maxCapacity: { $gte: 5 } },
+    },
+    {
+      $group: {
+        _id: null,
+        minPrice: { $min: "$price" },
+        maxPrice: { $max: "$price" },
+        avgPrice: { $avg: "$price" },
+        numOfCabin: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { avgPrice: 1 },
+    },
+  ]);
+
+  res.status(200).json({
+    status: "success",
+    data: stats,
+  });
+});

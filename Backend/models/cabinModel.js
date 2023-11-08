@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
-
+const slugify = require("slugify");
 const cabinSchema = mongoose.Schema(
   {
     name: {
       type: String,
       unique: true,
       required: [true, "Name is required"],
+      trim: true,
     },
     maxCapacity: {
       type: Number,
@@ -28,6 +29,16 @@ const cabinSchema = mongoose.Schema(
     },
     priceDiscount: {
       type: Number,
+      // validate: function (val){
+      //    return val<= this.price*0.5;
+      // }
+
+      validate: {
+        validator: function (val) {
+          return val <= this.price * 0.5;
+        },
+        message: "Discount should be less than 50% ({VALUE})",
+      },
     },
     description: {
       type: String,
@@ -42,7 +53,13 @@ const cabinSchema = mongoose.Schema(
     },
     slug: String,
     imageCover: String,
+    secretCabin: {
+      type: Boolean,
+      default: false,
+      select: false,
+    },
   },
+
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
@@ -52,5 +69,17 @@ const cabinSchema = mongoose.Schema(
 cabinSchema.virtual("discountPercentage").get(function () {
   return `${Math.floor((this.priceDiscount * 100) / this.price)}%`;
 });
+
+cabinSchema.pre("save", function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+cabinSchema.pre(/^find/, function (next) {
+  this.find({ secretCabin: { $ne: true } });
+
+  next();
+});
+
 const Cabin = mongoose.model("Cabin", cabinSchema);
 module.exports = Cabin;
