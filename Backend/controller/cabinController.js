@@ -1,6 +1,7 @@
 const Cabin = require("./../models/cabinModel");
 const APIFeatures = require("./../utils/apiFeatures");
 const catchAsync = require("./../utils/catchAsync");
+const AppError = require("./../utils/appError");
 
 exports.createCabin = catchAsync(async function (req, res, next) {
   const cabin = await Cabin.create(req.body);
@@ -31,6 +32,7 @@ exports.getAllCabins = catchAsync(async function (req, res, next) {
 
 exports.getCabin = catchAsync(async function (req, res, next) {
   const cabin = await Cabin.findById(req.params.id);
+  if (!cabin) return next(new AppError("No cabin found !!!", 404));
   res.status(200).json({
     status: "success",
     data: {

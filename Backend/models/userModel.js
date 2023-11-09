@@ -1,0 +1,64 @@
+const mongoose = require("mongoose");
+const validator = require("validator");
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "name field is required"],
+  },
+  email: {
+    type: String,
+    validate: [validator.isEmail, "Please provide a valid email address"],
+    required: [true, "email field is required"],
+    lowercase: true,
+    trim: true,
+  },
+  
+  photo: {
+    type: String,
+    default: "data/img/default-user.jpg",
+  },
+  password: {
+    type: String,
+    required: [true, 'password field is required'];
+    minLength:8,
+    select:false,
+  },confirmPassword: {
+ type:String,
+ required: [true, 'ConfirmPassword field is required'],
+ validate:{
+    validator:function (el){
+        return el===this.password;
+    },
+    messages: 'Password and Confirm Password must be the same'
+ },
+  },
+  passwordChangedAt: Date,
+  role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user",
+    select: false,
+  },
+  isAdmin:{
+    type:Boolean,
+    select: false,
+    default:false,
+  },
+  passwordResetToken: String,
+  passwordExpireToken: Date,
+  nationalID:{
+    type:String,
+    required:[true,'National Id is required'],
+  },
+  nationality:{
+    type:Sting,
+    required:[true,'National Id is required'],
+  },
+  countryFlag:{
+    type:String,
+    default:'https://flagcdn.com/in.svg',
+  }
+});
+
+const User=mongoose.model("User",userSchema);
+module.exports=User;
