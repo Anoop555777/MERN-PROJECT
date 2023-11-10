@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcryptjs");
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -12,25 +14,27 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
   },
-  
+
   photo: {
     type: String,
     default: "data/img/default-user.jpg",
   },
   password: {
     type: String,
-    required: [true, 'password field is required'];
-    minLength:8,
-    select:false,
-  },confirmPassword: {
- type:String,
- required: [true, 'ConfirmPassword field is required'],
- validate:{
-    validator:function (el){
-        return el===this.password;
+    required: [true, "password field is required"],
+    minLength: 8,
+    select: false,
+  },
+
+  confirmPassword: {
+    type: String,
+    required: [true, "ConfirmPassword field is required"],
+    validate: {
+      validator: function (el) {
+        return el === this.password;
+      },
+      messages: "Password and Confirm Password must be the same",
     },
-    messages: 'Password and Confirm Password must be the same'
- },
   },
   passwordChangedAt: Date,
   role: {
@@ -39,26 +43,36 @@ const userSchema = new mongoose.Schema({
     default: "user",
     select: false,
   },
-  isAdmin:{
-    type:Boolean,
+  isAdmin: {
+    type: Boolean,
     select: false,
-    default:false,
+    default: false,
   },
   passwordResetToken: String,
   passwordExpireToken: Date,
-  nationalID:{
-    type:String,
-    required:[true,'National Id is required'],
+  nationalId: {
+    type: String,
+    required: [true, "National Id is required"],
   },
-  nationality:{
-    type:Sting,
-    required:[true,'National Id is required'],
+  nationality: {
+    type: String,
+    required: [true, "National Id is required"],
+    lowercase: true,
   },
-  countryFlag:{
-    type:String,
-    default:'https://flagcdn.com/in.svg',
-  }
+  // countryFlag: {
+  //   type: String,
+  //   default: "https://flagcdn.com/in.svg",
+  // },
 });
 
-const User=mongoose.model("User",userSchema);
-module.exports=User;
+userSchema.pre("save", async function (next) {
+  //only work when password is modify
+  if (!this.isModified) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  this.confirmPassword = undefined;
+
+  next();
+});
+
+const User = mongoose.model("User", userSchema);
+module.exports = User;
