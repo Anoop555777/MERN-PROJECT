@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   role: {
     type: String,
-    enum: ["user", "admin"],
+    enum: ["user", "admin", "employee"],
     default: "user",
     select: false,
   },
@@ -50,6 +50,7 @@ const userSchema = new mongoose.Schema({
   },
   passwordResetToken: String,
   passwordExpireToken: Date,
+
   nationalId: {
     type: String,
     required: [true, "National Id is required"],
@@ -73,6 +74,24 @@ userSchema.pre("save", async function (next) {
 
   next();
 });
+
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+userSchema.methods.changePasswordAfter = function (JWTTimeStamp) {
+  if (this.passwordChangedAt) {
+    const changeTimeStamp = Number.parseInt(
+      this.passwordChangedAt.getTime() / 1000
+    );
+
+    return JWTTimeStamp < changeTimeStamp;
+  }
+  return false;
+};
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
