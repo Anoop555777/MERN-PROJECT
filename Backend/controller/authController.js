@@ -3,6 +3,8 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const AppError = require("./../utils/appError");
 const util = require("util");
+const Email = require("./../utils/email");
+const crypto = require("crypto");
 
 const generateToken = (user) => {
   return jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
@@ -93,3 +95,61 @@ exports.restrict =
       next(new AppError("You are forbidden", 403));
     next();
   };
+
+exports.forgetPassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user)
+    return next(
+      new AppError("No email found!!! please enter valid email", 400)
+    );
+
+  //generate a ramdom token
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+
+  const resetUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/users/resetPassword?reset_token=${resetToken}`;
+
+  try {
+    await new Email(user, resetUrl).sendPasswordReset();
+    res.status(200).json({
+      status: "success",
+      message: "Token sent to email!",
+    });
+  } catch (err) {
+    console.log(err);
+    user.passwordResetToken = undefined;
+    user.passwordExpireToken = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new AppError("There was an error sending the email. Try again later!"),
+      500
+    );
+  }
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(req.query.reset_token)
+    .digest("hex");
+  const user = await User.findOne({
+    passwordExpireToken: hashedToken,
+    passwordExpireToken: { $gt: Date.now() },
+  });
+
+  if (!user) return next(new AppError("Token is invalid or expired", 400));
+
+  const { password, confirmPassword } = req.body;
+  if (!password || !confirmPassword)
+    return next(new AppError("please enter all field required", 400));
+
+  user.password = password;
+  user.confirmPassword = confirmPassword;
+  user.passwordResetToken = undefined;
+  user.passwordExpireToken = undefined;
+  await user.save();
+
+  sendToken(res, user, 200);
+});
