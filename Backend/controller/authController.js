@@ -153,3 +153,20 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   sendToken(res, user, 200);
 });
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const { passwordCurrent, password, confirmPassword } = req.body;
+  if (!passwordCurrent || !password || !confirmPassword)
+    return next(new AppError("All field are required", 400));
+
+  const user = await User.findById(req.user._id).select("+password");
+
+  if (!(await user.correctPassword(passwordCurrent, user.password)))
+    return next(new AppError("enter correct password", 401));
+
+  user.password = password;
+  user.confirmPassword = confirmPassword;
+  await user.save();
+  const userUpdateInfo = await User.findById(user._id);
+  sendToken(res, userUpdateInfo, 200);
+});
