@@ -14,6 +14,19 @@ const generateToken = (user) => {
 
 const sendToken = (res, user, statusCode) => {
   const token = generateToken(user);
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
+
+  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
+
+  res.cookie("JWT", token, cookieOptions);
+
+  user.password = undefined;
+
   res.status(statusCode).json({
     status: "success",
     token,
