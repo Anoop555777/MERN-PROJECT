@@ -31,7 +31,7 @@ exports.getAllCabins = catchAsync(async function (req, res, next) {
 });
 
 exports.getCabin = catchAsync(async function (req, res, next) {
-  const cabin = await Cabin.findById(req.params.id);
+  const cabin = await Cabin.findById(req.params.id).populate("reviews");
   if (!cabin) return next(new AppError("No cabin found !!!", 404));
   res.status(200).json({
     status: "success",

@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const cabinController = require("./../controller/cabinController");
 const authController = require("./../controller/authController");
+const reviewRouter = require("./../routers/reviewRouter");
+
+router.use("/:cabinId/reviews", reviewRouter);
+
 router
   .route("/")
   .get(cabinController.getAllCabins)
@@ -18,4 +22,5 @@ router
     cabinController.deleteCabin
   )
   .patch(cabinController.updateCabin);
+
 module.exports = router;

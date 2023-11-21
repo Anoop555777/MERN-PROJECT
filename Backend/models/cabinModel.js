@@ -70,6 +70,12 @@ cabinSchema.virtual("discountPercentage").get(function () {
   return `${Math.floor((this.priceDiscount * 100) / this.price)}%`;
 });
 
+cabinSchema.virtual("reviews", {
+  ref: "Review",
+  foreignField: "cabin",
+  localField: "_id",
+});
+
 cabinSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
