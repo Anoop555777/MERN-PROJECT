@@ -66,6 +66,8 @@ const cabinSchema = mongoose.Schema(
   }
 );
 
+cabinSchema.index({ slug: 1 });
+
 cabinSchema.virtual("discountPercentage").get(function () {
   return `${Math.floor((this.priceDiscount * 100) / this.price)}%`;
 });

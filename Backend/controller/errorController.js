@@ -32,8 +32,13 @@ function handleCastError(err) {
 }
 
 function handleDuplicateError(err) {
-  const { name } = err.keyValue;
-  const message = `Duplicate Field value ${name.toUpperCase()} please enter another value`;
+  let { name } = err.keyValue;
+  let message;
+  if (name) {
+    message = `Duplicate Field value ${name.toUpperCase()} please enter another value`;
+  } else {
+    message = `Duplicate one user can give only one review for particular cabin `;
+  }
   return new AppError(message, 400);
 }
 
