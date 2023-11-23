@@ -64,9 +64,19 @@ exports.login = catchAsync(async function (req, res, next) {
   sendToken(res, user, 200);
 });
 
+exports.logout = (req, res) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({ status: "success" });
+};
+
 exports.protectRoute = catchAsync(async function (req, res, next) {
   let token;
-  if (
+  if (req.cookies.jwt) token = req.cookies.jwt;
+  else if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   )
