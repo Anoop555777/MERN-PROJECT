@@ -2,6 +2,70 @@ const Cabin = require("./../models/cabinModel");
 const APIFeatures = require("./../utils/apiFeatures");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
+const multer = require("multer");
+const sharp = require("sharp");
+
+const multerStorage = multer.memoryStorage();
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) cb(null, true);
+  else cb(new AppError(400, "Not an image! Please upload only images."), false);
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadCabinPhoto = upload.fields([
+  { name: "imageCover", maxCount: 1 },
+  {
+    name: "images",
+    maxCount: 3,
+  },
+]);
+
+exports.resizeCabinPhoto = catchAsync(async (req, res, next) => {
+  if (req.files.imageCover || req.files.images) return next();
+
+  const imageCover = `img/cabin/cabin-${req.params.id}-${Date.now()}.jpeg`;
+
+  await sharp(req.files.imageCover[0].buffer)
+    .resize(2000, 1333, {
+      fit: sharp.fit.cover,
+    })
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 })
+    .toFile(`Frontend/public/${imageCover}`);
+
+  req.body.imageCover = imageCover;
+  console.log(req.body.imageCover);
+
+  req.body.images = [];
+
+  await Promise.all(
+    req.file.images.map(async (files, i) => {
+      await sharp(files.buffer)
+        .resize(2000, 1333, {
+          fit: sharp.fit.cover,
+        })
+        .toFormat("jpeg")
+        .jpeg({ quality: 90 })
+        .toFile(
+          `Frontend/public/img/cabin/cabin-${req.params.id}-${Date.now()}-${
+            i + 1
+          }.jpeg`
+        );
+      req.body.images.push(
+        `Frontend/public/img/cabin/cabin-${req.params.id}-${Date.now()}-${
+          i + 1
+        }.jpeg`
+      );
+    })
+  );
+  console.log(req.body.images);
+
+  next();
+});
 
 exports.createCabin = catchAsync(async function (req, res, next) {
   const cabin = await Cabin.create(req.body);

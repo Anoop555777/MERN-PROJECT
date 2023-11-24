@@ -45,7 +45,10 @@ const cabinSchema = mongoose.Schema(
       trim: true,
     },
     images: [String],
-    imageCover: String,
+    imageCover: {
+      type: String,
+      required: [true, "cabin must have image cover"],
+    },
     createdAt: {
       type: Date,
       default: Date.now(),

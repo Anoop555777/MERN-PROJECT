@@ -13,7 +13,14 @@ router.patch(
   authController.updatePassword
 );
 
-router.patch("/userMe", authController.protectRoute, userController.userMe);
+router.patch(
+  "/userMe",
+  authController.protectRoute,
+  userController.uploadUserPhoto,
+  userController.resizeUserPhoto,
+  userController.userMe
+);
+
 router.delete(
   "/deleteMe",
   authController.protectRoute,

@@ -9,7 +9,13 @@ router.use("/:cabinId/reviews", reviewRouter);
 router
   .route("/")
   .get(cabinController.getAllCabins)
-  .post(cabinController.createCabin);
+  .post(
+    authController.protectRoute,
+    authController.restrict("admin"),
+    cabinController.uploadCabinPhoto,
+    cabinController.resizeCabinPhoto,
+    cabinController.createCabin
+  );
 
 router.route("/stats").get(cabinController.stats);
 
