@@ -6,9 +6,10 @@ const multer = require("multer");
 const sharp = require("sharp");
 
 const multerStorage = multer.memoryStorage();
+
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) cb(null, true);
-  else cb(new AppError(400, "Not an image! Please upload only images."), false);
+  else cb(new AppError("not a image! please upload a image", 400), false);
 };
 
 const upload = multer({
@@ -18,51 +19,45 @@ const upload = multer({
 
 exports.uploadCabinPhoto = upload.fields([
   { name: "imageCover", maxCount: 1 },
-  {
-    name: "images",
-    maxCount: 3,
-  },
+  { name: "images", maxCount: 3 },
 ]);
 
 exports.resizeCabinPhoto = catchAsync(async (req, res, next) => {
-  if (req.files.imageCover || req.files.images) return next();
+  console.log(req.files);
 
-  const imageCover = `img/cabin/cabin-${req.params.id}-${Date.now()}.jpeg`;
+  if (!req.files.imageCover || !req.files.images) return next();
 
+  const imageCover = `img/cabin/cover-image-${Date.now()}.jpeg`;
+
+  req.body.imageCover = imageCover;
+  console.log(req.body.imageCover);
   await sharp(req.files.imageCover[0].buffer)
     .resize(2000, 1333, {
       fit: sharp.fit.cover,
     })
     .toFormat("jpeg")
     .jpeg({ quality: 90 })
-    .toFile(`Frontend/public/${imageCover}`);
-
-  req.body.imageCover = imageCover;
-  console.log(req.body.imageCover);
+    .toFile(`Frontend/vite-project/public/${imageCover}`);
 
   req.body.images = [];
 
   await Promise.all(
-    req.file.images.map(async (files, i) => {
-      await sharp(files.buffer)
+    req.files.images.map(async (file, i) => {
+      const filename = `Frontend/vite-project/public/img/cabin/cabin-${
+        Date.now() + i + 1
+      }.jpeg`;
+
+      await sharp(file.buffer)
         .resize(2000, 1333, {
           fit: sharp.fit.cover,
         })
         .toFormat("jpeg")
         .jpeg({ quality: 90 })
-        .toFile(
-          `Frontend/public/img/cabin/cabin-${req.params.id}-${Date.now()}-${
-            i + 1
-          }.jpeg`
-        );
-      req.body.images.push(
-        `Frontend/public/img/cabin/cabin-${req.params.id}-${Date.now()}-${
-          i + 1
-        }.jpeg`
-      );
+        .toFile(filename);
+
+      req.body.images.push(filename);
     })
   );
-  console.log(req.body.images);
 
   next();
 });
