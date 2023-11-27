@@ -1,10 +1,19 @@
 const express = require("express");
-const router = express.Router();
 const authController = require("./../controller/authController");
 const bookingController = require("./../controller/bookingController");
+const router = express.Router({ mergeParams: true });
 router
   .route("/")
-  .post(authController.protectRoute, bookingController.createBooking)
+  .post(
+    authController.protectRoute,
+    authController.restrict("user"),
+    bookingController.createBooking
+  )
+  .get(
+    authController.protectRoute,
+    authController.restrict("user"),
+    bookingController.getMyBooking
+  )
   .get(
     authController.protectRoute,
     authController.restrict("admin"),

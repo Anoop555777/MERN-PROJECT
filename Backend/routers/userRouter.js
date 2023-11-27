@@ -1,7 +1,9 @@
 const express = require("express");
 const authController = require("../controller/authController");
 const userController = require("../controller/userController");
+const bookingRouter = require("./../routers/bookingRouter");
 const router = express.Router();
+router.use("/:userId/myBookings", bookingRouter);
 
 router.post("/signin", authController.signIn);
 router.post("/login", authController.login);
