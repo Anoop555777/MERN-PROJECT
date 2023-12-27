@@ -23,27 +23,25 @@ exports.uploadCabinPhoto = upload.fields([
 ]);
 
 exports.resizeCabinPhoto = catchAsync(async (req, res, next) => {
-  console.log(req.files);
-
   if (!req.files.imageCover || !req.files.images) return next();
 
-  const imageCover = `img/cabin/cover-image-${Date.now()}.jpeg`;
+  const imageCover = `data/img/cabin/cover-image-${Date.now()}.jpeg`;
 
   req.body.imageCover = imageCover;
-  console.log(req.body.imageCover);
+
   await sharp(req.files.imageCover[0].buffer)
     .resize(2000, 1333, {
       fit: sharp.fit.cover,
     })
     .toFormat("jpeg")
     .jpeg({ quality: 90 })
-    .toFile(`Frontend/vite-project/public/${imageCover}`);
+    .toFile(`Frontend/public/${imageCover}`);
 
   req.body.images = [];
 
   await Promise.all(
     req.files.images.map(async (file, i) => {
-      const filename = `Frontend/vite-project/public/img/cabin/cabin-${
+      const filename = `Frontend/public/data/img/cabin/cabin-${
         Date.now() + i + 1
       }.jpeg`;
 

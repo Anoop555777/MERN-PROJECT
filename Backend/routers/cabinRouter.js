@@ -6,16 +6,13 @@ const reviewRouter = require("./../routers/reviewRouter");
 
 router.use("/:cabinId/reviews", reviewRouter);
 
-router
-  .route("/")
-  .get(cabinController.getAllCabins)
-  .post(
-    authController.protectRoute,
-    authController.restrict("admin"),
-    cabinController.uploadCabinPhoto,
-    cabinController.resizeCabinPhoto,
-    cabinController.createCabin
-  );
+router.route("/").get(cabinController.getAllCabins).post(
+  // authController.protectRoute,
+  // authController.restrict("admin"),
+  cabinController.uploadCabinPhoto,
+  cabinController.resizeCabinPhoto,
+  cabinController.createCabin
+);
 
 router.route("/stats").get(cabinController.stats);
 
@@ -23,8 +20,8 @@ router
   .route("/:id")
   .get(cabinController.getCabin)
   .delete(
-    authController.protectRoute,
-    authController.restrict("admin", "employee"),
+    // authController.protectRoute,
+    // authController.restrict("admin", "employee"),
     cabinController.deleteCabin
   )
   .patch(cabinController.updateCabin);

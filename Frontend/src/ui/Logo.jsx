@@ -17,7 +17,7 @@ const Img = styled.img`
 `;
 
 const Logo = () => {
-  const src = "/img/logo.png";
+  const src = "data/img/logo.png";
   return (
     <StyledLogo>
       <Link to="/">

@@ -11,6 +11,7 @@ const xssClean = require("xss-clean");
 const hpp = require("hpp");
 const reviewRouter = require("./routers/reviewRouter");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 app.use(helmet());
 app.use(
   express.json({
@@ -18,6 +19,7 @@ app.use(
   })
 );
 app.use(cookieParser());
+app.use(cors());
 const limit = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
