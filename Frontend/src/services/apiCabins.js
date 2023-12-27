@@ -31,7 +31,6 @@ export async function createCabin(cabinData) {
     });
     return data;
   } catch (err) {
-    console.log(err);
-    throw new Error("Something went wrong please try again");
+    throw new Error(err);
   }
 }

@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import Input from "./../../ui/Input";
 import Textarea from "./../../ui/Textarea";
 import Form from "./../../ui/Form";
@@ -8,43 +7,12 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
-const FormRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 2.4rem;
-
-  &:first-child {
-    padding-top: 0;
-  }
-
-  &:last-child {
-    padding-bottom: 0;
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-
-  &:has(button) {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.2rem;
-  }
-`;
-
-const Label = styled.label`
-  font-weight: 500;
-`;
-
-const Error = styled.span`
-  font-size: 1.4rem;
-  color: var(--color-red-700);
-`;
-
+import FormRow from "../../ui/FormRow";
 function CreateCabinForm() {
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, getValues, formState } = useForm();
+
+  const { errors } = formState;
   const { isLoading: isCreating, mutate } = useMutation({
     mutationFn: createCabin,
     onSuccess: () => {
@@ -69,35 +37,62 @@ function CreateCabinForm() {
     mutate(form);
   }
 
+  function onErrorHandler(err) {
+    console.log(err);
+  }
   return (
-    <Form onSubmit={handleSubmit(onSubmitHandler)}>
-      <FormRow>
-        <Label htmlFor="name">Cabin name</Label>
-        <Input type="text" id="name" {...register("name")} />
+    <Form onSubmit={handleSubmit(onSubmitHandler, onErrorHandler)}>
+      <FormRow label="Cabin Name" error={errors?.name?.message}>
+        <Input
+          type="text"
+          id="name"
+          {...register("name", {
+            required: "Name is required",
+          })}
+        />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" {...register("maxCapacity")} />
+      <FormRow label="Max Capacity" error={errors?.maxCapacity?.message}>
+        <Input
+          type="number"
+          id="maxCapacity"
+          {...register("maxCapacity", {
+            required: "Capacity is required",
+            min: {
+              value: 1,
+              message: "capacity must be more than one",
+            },
+          })}
+        />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="price">Regular price</Label>
-        <Input type="number" id="price" {...register("price")} />
+      <FormRow label="Regular price" error={errors?.price?.message}>
+        <Input
+          type="number"
+          id="price"
+          {...register("price", {
+            required: "Price is required",
+          })}
+        />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="priceDiscount">Discount</Label>
+      <FormRow label="Discount" error={errors?.discount?.message}>
         <Input
           type="number"
           id="priceDiscount"
           defaultValue={0}
-          {...register("priceDiscount")}
+          {...register("priceDiscount", {
+            required: "Discount is required",
+            validate: (value) =>
+              value <= getValues().price || "Discount should be less than 50%",
+          })}
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="description">Description for website</Label>
+      <FormRow
+        label="Description for website"
+        error={errors?.description?.message}
+      >
         <Textarea
           type="number"
           id="description"
@@ -106,18 +101,18 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="imageCover">Cabin photo</Label>
+      <FormRow label="Cabin Photo" error={errors?.imageCover?.message}>
         <FileInput
           id="imageCover"
           accept="image/*"
           type="file"
-          {...register("imageCover")}
+          {...register("imageCover", {
+            required: "cabin must have image cover",
+          })}
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="image1">Cabin Images</Label>
+      <FormRow label="Cabin Images">
         <FileInput
           id="image1"
           accept="image/*"
@@ -127,8 +122,7 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="image2">Cabin Images</Label>
+      <FormRow label="Cabin Images">
         <FileInput
           id="image2"
           accept="image/*"
@@ -136,8 +130,7 @@ function CreateCabinForm() {
           {...register("image2")}
         />
       </FormRow>
-      <FormRow>
-        <Label htmlFor="image3">Cabin Images</Label>
+      <FormRow label="Cabin Images">
         <FileInput
           id="image3"
           accept="image/*"
