@@ -103,6 +103,7 @@ exports.updateCabin = catchAsync(async function (req, res, next) {
     new: true,
     runValidators: true,
   });
+
   res.status(200).json({
     status: "success",
     data: {

@@ -32,13 +32,7 @@ const cabinSchema = mongoose.Schema(
       // validate: function (val){
       //    return val<= this.price*0.5;
       // }
-
-      validate: {
-        validator: function (val) {
-          return val <= this.price * 0.5;
-        },
-        message: "Discount should be less than 50% ({VALUE})",
-      },
+      //i have validate in front end
     },
     description: {
       type: String,

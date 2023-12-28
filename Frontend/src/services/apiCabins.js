@@ -23,11 +23,26 @@ export async function deleteCabin(id) {
 }
 
 export async function createCabin(cabinData) {
+  console.log(FormData);
   try {
     const { data } = await axios({
       method: "POST",
       url: "http://127.0.0.1:8000/api/v1/cabins",
       data: cabinData,
+    });
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+export async function editCabin(id, data) {
+  const editData = Object.fromEntries(data);
+  try {
+    const { data } = await axios({
+      method: "PATCH",
+      url: `http://127.0.0.1:8000/api/v1/cabins/${id}`,
+      data: editData,
     });
     return data;
   } catch (err) {

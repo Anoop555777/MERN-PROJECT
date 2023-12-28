@@ -4,44 +4,58 @@ import Form from "./../../ui/Form";
 import Button from "./../../ui/Button";
 import FileInput from "./../../ui/FileInput";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
+
 import FormRow from "../../ui/FormRow";
-function CreateCabinForm() {
-  const queryClient = useQueryClient();
-  const { register, handleSubmit, reset, getValues, formState } = useForm();
+import useCreateCabin from "./useCreateCabin";
+import useEditCabin from "./useEditCabin";
+function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
+  const { _id: editId, ...editValues } = cabinToEdit;
+  const isEditingSession = Boolean(editId);
+
+  const { register, handleSubmit, reset, getValues, formState } = useForm({
+    defaultValues: isEditingSession ? editValues : {},
+  });
 
   const { errors } = formState;
-  const { isLoading: isCreating, mutate } = useMutation({
-    mutationFn: createCabin,
-    onSuccess: () => {
-      toast.success("Cabin created successfully");
-      queryClient.invalidateQueries({ queryKey: ["cabins"] });
-      reset();
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  const { isCreating, createCabinMutate } = useCreateCabin();
+  const { isEditing, editCabinMutate } = useEditCabin();
+  const isLoading = isEditing || isCreating;
 
   function onSubmitHandler(data) {
     const form = new FormData();
-    form.append("name", data.name);
+    if (isEditingSession) {
+      if (data.name !== editValues.name) form.append("name", data.name);
+    } else {
+      form.append("name", data.name);
+    }
     form.append("price", data.price);
     form.append("priceDiscount", data.priceDiscount);
     form.append("description", data.description);
-    form.append("imageCover", data.imageCover[0]);
-    form.append("images", data.image1[0]);
-    form.append("images", data.image2[0]);
-    form.append("images", data.image3[0]);
     form.append("maxCapacity", data.maxCapacity);
-    mutate(form);
+    if (!isEditingSession) {
+      form.append("imageCover", data.imageCover[0]);
+      form.append("images", data.image1[0]);
+      form.append("images", data.image2[0]);
+      form.append("images", data.image3[0]);
+    }
+    if (isEditingSession) editCabinMutate({ newCabinData: form, id: editId });
+    else
+      createCabinMutate(form, {
+        onSuccess: () => {
+          reset();
+          onCloseModal?.();
+        },
+      });
   }
 
   function onErrorHandler(err) {
     console.log(err);
   }
   return (
-    <Form onSubmit={handleSubmit(onSubmitHandler, onErrorHandler)}>
+    <Form
+      type={onCloseModal ? "modal" : "regular"}
+      onSubmit={handleSubmit(onSubmitHandler, onErrorHandler)}
+    >
       <FormRow label="Cabin Name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -49,6 +63,7 @@ function CreateCabinForm() {
           {...register("name", {
             required: "Name is required",
           })}
+          disabled={isLoading}
         />
       </FormRow>
 
@@ -63,6 +78,7 @@ function CreateCabinForm() {
               message: "capacity must be more than one",
             },
           })}
+          disabled={isLoading}
         />
       </FormRow>
 
@@ -73,10 +89,11 @@ function CreateCabinForm() {
           {...register("price", {
             required: "Price is required",
           })}
+          disabled={isLoading}
         />
       </FormRow>
 
-      <FormRow label="Discount" error={errors?.discount?.message}>
+      <FormRow label="Discount" error={errors?.priceDiscount?.message}>
         <Input
           type="number"
           id="priceDiscount"
@@ -84,8 +101,10 @@ function CreateCabinForm() {
           {...register("priceDiscount", {
             required: "Discount is required",
             validate: (value) =>
-              value <= getValues().price || "Discount should be less than 50%",
+              value <= getValues().price * 0.5 ||
+              "Discount should be less than 50%",
           })}
+          disabled={isLoading}
         />
       </FormRow>
 
@@ -98,53 +117,67 @@ function CreateCabinForm() {
           id="description"
           defaultValue=""
           {...register("description")}
+          disabled={isLoading}
         />
       </FormRow>
 
-      <FormRow label="Cabin Photo" error={errors?.imageCover?.message}>
-        <FileInput
-          id="imageCover"
-          accept="image/*"
-          type="file"
-          {...register("imageCover", {
-            required: "cabin must have image cover",
-          })}
-        />
-      </FormRow>
-
-      <FormRow label="Cabin Images">
-        <FileInput
-          id="image1"
-          accept="image/*"
-          type="file"
-          multiple
-          {...register("image1")}
-        />
-      </FormRow>
-
-      <FormRow label="Cabin Images">
-        <FileInput
-          id="image2"
-          accept="image/*"
-          type="file"
-          {...register("image2")}
-        />
-      </FormRow>
-      <FormRow label="Cabin Images">
-        <FileInput
-          id="image3"
-          accept="image/*"
-          type="file"
-          {...register("image3")}
-        />
-      </FormRow>
+      {!isEditingSession && (
+        <>
+          {" "}
+          <FormRow label="Cabin Photo" error={errors?.imageCover?.message}>
+            <FileInput
+              id="imageCover"
+              accept="image/*"
+              type="file"
+              {...register("imageCover", {
+                required: "cabin must have image cover",
+              })}
+              disabled={isLoading}
+            />
+          </FormRow>
+          <FormRow label="Cabin Images">
+            <FileInput
+              id="image1"
+              accept="image/*"
+              type="file"
+              multiple
+              {...register("image1")}
+              disabled={isLoading}
+            />
+          </FormRow>
+          <FormRow label="Cabin Images">
+            <FileInput
+              id="image2"
+              accept="image/*"
+              type="file"
+              {...register("image2")}
+              disabled={isLoading}
+            />
+          </FormRow>
+          <FormRow label="Cabin Images">
+            <FileInput
+              id="image3"
+              accept="image/*"
+              type="file"
+              {...register("image3")}
+              disabled={isLoading}
+            />
+          </FormRow>
+        </>
+      )}
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
-        <Button disabled={isCreating}>Edit cabin</Button>
+        <Button disabled={isLoading}>
+          {isEditingSession ? "Edit Cabin" : "Add Cabin"}
+        </Button>
       </FormRow>
     </Form>
   );

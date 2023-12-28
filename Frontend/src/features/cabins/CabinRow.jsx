@@ -3,6 +3,9 @@ import { formatCurrency } from "./../../utiles/helper";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
 import { toast } from "react-hot-toast";
+import CreateCabinForm from "./CreateCabinForm";
+import { useState } from "react";
+import { HiPencil, HiTrash } from "react-icons/hi2";
 const TableRow = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -42,6 +45,7 @@ const Discount = styled.div`
 `;
 
 const CabinRow = ({ cabin }) => {
+  const [showEditForm, setShowEditForm] = useState(false);
   const queryClient = useQueryClient();
   const { isLoading, mutate } = useMutation({
     mutationFn: deleteCabin,
@@ -64,24 +68,32 @@ const CabinRow = ({ cabin }) => {
   } = cabin;
 
   return (
-    <TableRow role="row">
-      <Img src={imageCover} alt={`Cabin ${name}`} />
+    <>
+      <TableRow role="row">
+        <Img src={imageCover} alt={`Cabin ${name}`} />
 
-      <Cabin>{name}</Cabin>
+        <Cabin>{name}</Cabin>
 
-      <div>Fits up to {maxCapacity} guests</div>
+        <div>Fits up to {maxCapacity} guests</div>
 
-      <Price>{formatCurrency(price)}</Price>
+        <Price>{formatCurrency(price)}</Price>
 
-      {priceDiscount ? (
-        <Discount>{formatCurrency(priceDiscount)}</Discount>
-      ) : (
-        <span>&mdash;</span>
-      )}
-      <button onClick={() => mutate(cabinId)} disabled={isLoading}>
-        Delete
-      </button>
-    </TableRow>
+        {priceDiscount ? (
+          <Discount>{formatCurrency(priceDiscount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
+        <div>
+          <button onClick={() => setShowEditForm((prev) => !prev)}>
+            <HiPencil />
+          </button>
+          <button onClick={() => mutate(cabinId)} disabled={isLoading}>
+            <HiTrash />
+          </button>
+        </div>
+      </TableRow>
+      {showEditForm && <CreateCabinForm cabinToEdit={cabin} />}
+    </>
   );
 };
 
