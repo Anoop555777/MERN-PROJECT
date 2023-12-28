@@ -4,8 +4,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
 import { toast } from "react-hot-toast";
 import CreateCabinForm from "./CreateCabinForm";
-import { useState } from "react";
+
 import { HiPencil, HiTrash } from "react-icons/hi2";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 const TableRow = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -45,7 +47,6 @@ const Discount = styled.div`
 `;
 
 const CabinRow = ({ cabin }) => {
-  const [showEditForm, setShowEditForm] = useState(false);
   const queryClient = useQueryClient();
   const { isLoading, mutate } = useMutation({
     mutationFn: deleteCabin,
@@ -83,16 +84,34 @@ const CabinRow = ({ cabin }) => {
         ) : (
           <span>&mdash;</span>
         )}
+
         <div>
-          <button onClick={() => setShowEditForm((prev) => !prev)}>
-            <HiPencil />
-          </button>
-          <button onClick={() => mutate(cabinId)} disabled={isLoading}>
-            <HiTrash />
-          </button>
+          <Modal>
+            <Modal.Open opens="edit">
+              <button>
+                <HiPencil />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="edit">
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+          </Modal>
+          <Modal>
+            <Modal.Open opens="delete">
+              <button>
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                resource={name}
+                onConfirm={() => mutate(cabinId)}
+                disabled={isLoading}
+              />
+            </Modal.Window>
+          </Modal>
         </div>
       </TableRow>
-      {showEditForm && <CreateCabinForm cabinToEdit={cabin} />}
     </>
   );
 };

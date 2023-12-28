@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const useOutsideClickHook = ({ handler, listenCapturingPhase = true }) => {
+const useOutsideClickHook = (handler, listenCapturingPhase = true) => {
   const ref = useRef();
   useEffect(
     function () {

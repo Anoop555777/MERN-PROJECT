@@ -23,6 +23,7 @@ exports.uploadCabinPhoto = upload.fields([
 ]);
 
 exports.resizeCabinPhoto = catchAsync(async (req, res, next) => {
+  console.log(req.files);
   if (!req.files.imageCover || !req.files.images) return next();
 
   const imageCover = `data/img/cabin/cover-image-${Date.now()}.jpeg`;
