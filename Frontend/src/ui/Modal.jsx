@@ -82,6 +82,7 @@ function Open({ children, opens }) {
 
 function Window({ children, name }) {
   const { openName, close } = useContext(ModalContext);
+
   const ref = useOutsideClick(close);
   // const ref = useRef();
 

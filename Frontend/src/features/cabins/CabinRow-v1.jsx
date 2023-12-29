@@ -78,42 +78,48 @@ const CabinRow = ({ cabin }) => {
 
         <div>
           <Modal>
-            <Menus.Menu>
-              <Menus.Toggle id={cabinId}>
-                <HiEllipsisVertical />
-              </Menus.Toggle>
-              <Menus.List id={cabinId}>
-                <Modal.Open opens="edit">
-                  <Menus.Button>
-                    <span>
-                      <HiPencil />
-                    </span>
-                    Edit
-                  </Menus.Button>
-                </Modal.Open>
-                <Modal.Open opens="delete">
-                  <Menus.Button>
-                    <span>
-                      <HiTrash />
-                    </span>
-                    Delete
-                  </Menus.Button>
-                </Modal.Open>
-              </Menus.List>
-
-              <Modal.Window name="edit">
-                <CreateCabinForm cabinToEdit={cabin} />
-              </Modal.Window>
-
-              <Modal.Window name="delete">
-                <ConfirmDelete
-                  resource={name}
-                  onConfirm={() => mutate(cabinId)}
-                  disabled={isLoading}
-                />
-              </Modal.Window>
-            </Menus.Menu>
+            <Modal.Open opens="edit">
+              <button>
+                <HiPencil />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="edit">
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
           </Modal>
+          <Modal>
+            <Modal.Open opens="delete">
+              <button>
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                resource={name}
+                onConfirm={() => mutate(cabinId)}
+                disabled={isLoading}
+              />
+            </Modal.Window>
+          </Modal>
+          <Menus.Menu>
+            <Menus.Toggle id={cabinId}>
+              <HiEllipsisVertical />
+            </Menus.Toggle>
+            <Menus.List id={cabinId}>
+              <Menus.Button>
+                <span>
+                  <HiPencil />
+                </span>
+                Edit
+              </Menus.Button>
+              <Menus.Button>
+                <span>
+                  <HiTrash />
+                </span>
+                Delete
+              </Menus.Button>
+            </Menus.List>
+          </Menus.Menu>
         </div>
       </Table.Row>
     </>

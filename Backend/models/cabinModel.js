@@ -50,6 +50,7 @@ const cabinSchema = mongoose.Schema(
     },
     slug: String,
     imageCover: String,
+    discountPercentage: Number,
     secretCabin: {
       type: Boolean,
       default: false,
@@ -65,9 +66,9 @@ const cabinSchema = mongoose.Schema(
 
 cabinSchema.index({ slug: 1 });
 
-cabinSchema.virtual("discountPercentage").get(function () {
-  return `${Math.floor((this.priceDiscount * 100) / this.price)}%`;
-});
+// cabinSchema.virtual("discountPercentage").get(function () {
+//   return Math.floor((this.priceDiscount * 100) / this.price);
+// });
 
 cabinSchema.virtual("reviews", {
   ref: "Review",
@@ -77,6 +78,8 @@ cabinSchema.virtual("reviews", {
 
 cabinSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });
+
+  this.discountPercentage = Math.floor((this.priceDiscount * 100) / this.price);
   next();
 });
 

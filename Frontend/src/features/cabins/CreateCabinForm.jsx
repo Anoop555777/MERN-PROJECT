@@ -38,7 +38,15 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
       form.append("images", data.image2[0]);
       form.append("images", data.image3[0]);
     }
-    if (isEditingSession) editCabinMutate({ newCabinData: form, id: editId });
+    if (isEditingSession)
+      editCabinMutate(
+        { newCabinData: form, id: editId },
+        {
+          onSuccess: () => {
+            onCloseModal?.();
+          },
+        }
+      );
     else
       createCabinMutate(form, {
         onSuccess: () => {

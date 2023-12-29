@@ -5,13 +5,13 @@ import Button from "../ui/Button";
 import { useState } from "react";
 import CreateCabinForm from "../features/cabins/CreateCabinForm";
 import AddCabin from "../features/AddCabin";
+import CabinTableOperations from "../features/cabins/CabinTableOperations";
 function Cabins() {
-  const [showForm, setNewForm] = useState(false);
   return (
     <>
       <Row type="horizontal">
         <Heading as="h1">All cabins</Heading>
-        <p>filter/sort</p>
+        <CabinTableOperations />
       </Row>
       <Row>
         <CabinTable />
