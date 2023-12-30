@@ -5,10 +5,10 @@ const AddBooking = () => {
   return (
     <div>
       <Modal>
-        <Modal.Open opens="cabin-form">
+        <Modal.Open opens="booking-form">
           <Button>Add New Booking</Button>
         </Modal.Open>
-        <Modal.Window name="cabin-form">
+        <Modal.Window name="booking-form">
           <CreateBookingForm />
         </Modal.Window>
       </Modal>

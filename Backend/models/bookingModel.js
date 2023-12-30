@@ -27,7 +27,7 @@ const bookingSchema = mongoose.Schema({
   },
   isPaid: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   extraPrice: {
     type: Number,
