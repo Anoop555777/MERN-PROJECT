@@ -92,7 +92,12 @@ const GlobalStyle = createGlobalStyle`
   --color-brand-700: #b91c1c;
   --color-brand-800: #991b1b;
   --color-brand-900: #7f1d1d;
+  
+  --color-brand-gradient1:#dc2626b1;
+  --color-brand-gradient2:#b91c1cab;
 
+  --color-brand-img-gradient1: #dc262654;
+  --color-brand-img-gradient2:#b91c1c41;
 
 
   

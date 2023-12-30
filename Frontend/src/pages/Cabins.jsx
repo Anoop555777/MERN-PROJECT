@@ -4,7 +4,7 @@ import CabinTable from "../features/cabins/CabinTable";
 import Button from "../ui/Button";
 import { useState } from "react";
 import CreateCabinForm from "../features/cabins/CreateCabinForm";
-import AddCabin from "../features/AddCabin";
+import AddCabin from "../features/cabins/AddCabin";
 import CabinTableOperations from "../features/cabins/CabinTableOperations";
 function Cabins() {
   return (

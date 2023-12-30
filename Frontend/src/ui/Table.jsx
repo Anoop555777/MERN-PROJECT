@@ -25,8 +25,12 @@ const TableHeader = styled(CommonRow)`
 
 const TableRow = styled(CommonRow)`
   padding: 1.2rem;
+  cursor: pointer;
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-100);
+  }
+  &:hover {
+    background-color: var(--color-grey-100);
   }
 `;
 
@@ -61,10 +65,13 @@ function Header({ children }) {
   );
 }
 
-function Row({ children }) {
+function Row({ children, onClick }) {
   const { columns } = useContext(TableContext);
+  function handler() {
+    onClick?.();
+  }
   return (
-    <TableRow role="row" columns={columns}>
+    <TableRow role="row" columns={columns} onClick={handler}>
       {children}
     </TableRow>
   );

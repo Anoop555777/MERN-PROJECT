@@ -34,6 +34,7 @@ const StyledList = styled.ul`
 
   top: 3.8rem;
   z-index: 20;
+  width: max-content;
 `;
 
 const StyledButton = styled.button`

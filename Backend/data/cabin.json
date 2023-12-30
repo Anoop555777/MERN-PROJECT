@@ -31,7 +31,7 @@
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda eveniet nam tempora, voluptates iure consectetur ipsam doloribus unde, amet aperiam atque. Explicabo iure, tenetur commodi dolorum autem reiciendis a!",
     "maxCapacity": 5,
     "price": 42000,
-    "priceDiscount": 5000,
+    "priceDiscount": 20000,
     "imageCover": "data/img/cabin/cover-image-2.jpg",
     "__v": 0
   },
@@ -49,7 +49,7 @@
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda eveniet nam tempora, voluptates iure consectetur ipsam doloribus unde, amet aperiam atque. Explicabo iure, tenetur commodi dolorum autem reiciendis a!",
     "maxCapacity": 7,
     "price": 52000,
-    "priceDiscount": 5500,
+    "priceDiscount": 18000,
     "imageCover": "data/img/cabin/cover-image-3.jpg",
     "__v": 0
   },
@@ -67,7 +67,7 @@
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia assumenda eveniet nam tempora, voluptates iure consectetur ipsam doloribus unde, amet aperiam atque. Explicabo iure, tenetur commodi dolorum autem reiciendis a!",
     "maxCapacity": 4,
     "price": 22000,
-    "priceDiscount": 2000,
+    "priceDiscount": 8000,
     "imageCover": "data/img/cabin/cover-image-4.jpg",
     "__v": 0
   },

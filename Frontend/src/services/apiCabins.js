@@ -2,9 +2,19 @@ import axios from "axios";
 
 export async function getCabins() {
   try {
-    const { data } = await axios("http://127.0.0.1:8000/api/v1/cabins");
+    const { data } = await axios(`http://127.0.0.1:8000/api/v1/cabins`);
 
     return data.data.cabins;
+  } catch (err) {
+    throw new Error("Cabin could not be loaded");
+  }
+}
+
+export async function getCabin(id) {
+  try {
+    const { data } = await axios(`http://127.0.0.1:8000/api/v1/cabins/${id}`);
+
+    return data.data.cabin;
   } catch (err) {
     throw new Error("Cabin could not be loaded");
   }

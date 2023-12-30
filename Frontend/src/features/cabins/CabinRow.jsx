@@ -10,6 +10,7 @@ import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
+import { useNavigate } from "react-router-dom";
 
 const Img = styled.img`
   display: block;
@@ -58,10 +59,14 @@ const CabinRow = ({ cabin }) => {
     priceDiscount,
     maxCapacity,
   } = cabin;
+  const navigate = useNavigate();
+  function navigateHandler() {
+    navigate(`/cabins/${cabinId}`);
+  }
 
   return (
     <>
-      <Table.Row>
+      <Table.Row onClick={navigateHandler}>
         <Img src={imageCover} alt={`Cabin ${name}`} />
 
         <Cabin>{name}</Cabin>

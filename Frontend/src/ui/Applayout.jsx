@@ -13,7 +13,27 @@ const StyledLayout = styled.div`
 const Main = styled.main`
   background-color: var(--color-grey-50);
   padding: 4rem 4.6rem 6.4rem;
-  overflow: scroll;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-brand-600);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand-700);
+  }
 `;
 
 const Applayout = () => {
