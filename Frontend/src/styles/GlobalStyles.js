@@ -194,6 +194,35 @@ img {
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
 
+.react-datepicker {
+  font-family: inherit;
+  font-size: 1.4rem;
+}
+
+
+
+.react-datepicker__input-container input{
+  border: none;
+  
+  background-color: var(--color-grey-0);
+  border-radius: var(--border-radius-sm);
+  padding: 0.8rem 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.react-datepicker__day{
+  margin: 0.666rem;
+}
+
+.react-datepicker__day-name
+{
+  margin: 0.666rem;
+}
+
+.react-datepicker__current-month{
+  font-size:1.4rem
+}
+
 
 `;
 

@@ -1,7 +1,7 @@
 import Modal from "../../ui/Modal";
 import Button from "../../ui/Button";
 import CreateBookingForm from "./CreateBookingForm";
-const AddBooking = () => {
+const AddBooking = ({ cabin }) => {
   return (
     <div>
       <Modal>
@@ -9,7 +9,7 @@ const AddBooking = () => {
           <Button>Add New Booking</Button>
         </Modal.Open>
         <Modal.Window name="booking-form">
-          <CreateBookingForm />
+          <CreateBookingForm cabin={cabin} />
         </Modal.Window>
       </Modal>
     </div>

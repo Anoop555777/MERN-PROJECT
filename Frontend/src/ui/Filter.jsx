@@ -31,6 +31,7 @@ const Filter = ({ filterField, options, query }) => {
 
   function handlerFilter(query) {
     searchParam.set(filterField, query);
+    searchParam.set("page", 1);
     setSearchParam(searchParam);
   }
   return (

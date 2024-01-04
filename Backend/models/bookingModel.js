@@ -51,12 +51,21 @@ const bookingSchema = mongoose.Schema({
     ref: "Cabin",
     required: [true, "Booking must belong to a Cabin!"],
   },
+  status: {
+    type: String,
+    required: [true, "Status must to belong to a Cabin"],
+    enum: {
+      values: ["checked-in", "checked-out", "unconfirmed"],
+      message: "only these field is required",
+    },
+    default: "unconfirmed",
+  },
 });
 
 bookingSchema.pre(/^find/, function (next) {
   this.populate({ path: "cabin" }).populate({
     path: "user",
-    select: "name email",
+    select: "name email nationalId nationality countryFlag",
   });
   next();
 });

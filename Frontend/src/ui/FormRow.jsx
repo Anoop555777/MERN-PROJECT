@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledFormRow = styled.div`
   display: grid;
@@ -20,9 +20,13 @@ const StyledFormRow = styled.div`
   }
 
   &:has(button) {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.2rem;
+    ${(props) =>
+      props.type !== "nobutton" &&
+      css`
+        display: flex;
+        justify-content: flex-end;
+        gap: 1.2rem;
+      `}
   }
 `;
 
@@ -37,7 +41,7 @@ const Error = styled.span`
 
 const FormRow = ({ label, children, error }) => {
   return (
-    <StyledFormRow>
+    <StyledFormRow type={label && "nobutton"}>
       {label && <Label htmlFor={children.props.id}>{label}</Label>}
       {children}
       {error && <Error>{error}</Error>}

@@ -1,5 +1,5 @@
 import CabinHeader from "./../../ui/CabinHeader";
-import useCabinDetail from "../useCabinDetail";
+import useCabinDetail from "./useCabinDetail";
 import Spinner from "../../ui/Spinner";
 import AddBooking from "./../bookings/AddBooking";
 const CabinDetailPage = () => {
@@ -8,7 +8,7 @@ const CabinDetailPage = () => {
   return (
     <>
       <CabinHeader cabin={cabin} />
-      <AddBooking />
+      <AddBooking cabin={cabin} />
     </>
   );
 };

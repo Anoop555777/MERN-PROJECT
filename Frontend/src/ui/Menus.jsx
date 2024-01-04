@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { createContext, useContext, useState } from "react";
-import { createPortal } from "react-dom";
-import useOutsideClickHook from "../hooks/useOutsideClickHook";
+
 const StyledMenu = styled.div`
   display: flex;
   align-items: center;

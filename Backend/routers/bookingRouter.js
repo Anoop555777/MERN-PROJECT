@@ -5,19 +5,16 @@ const router = express.Router({ mergeParams: true });
 router
   .route("/")
   .post(
-    authController.protectRoute,
-    authController.restrict("user"),
+    // authController.protectRoute,
+    // authController.restrict("user"),
     bookingController.createBooking
   )
   .get(
-    authController.protectRoute,
-    authController.restrict("user"),
-    bookingController.getMyBooking
-  )
-  .get(
-    authController.protectRoute,
-    authController.restrict("admin"),
+    // authController.protectRoute,
+    // authController.restrict("user"),
     bookingController.getAllBookings
   );
+
+router.route("/:bookingId").get(bookingController.getBooking);
 
 module.exports = router;

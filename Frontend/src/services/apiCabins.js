@@ -1,10 +1,12 @@
 import axios from "axios";
 
-export async function getCabins() {
+export async function getCabins({ page, filter }) {
   try {
-    const { data } = await axios(`http://127.0.0.1:8000/api/v1/cabins`);
+    const { data } = await axios(
+      `http://127.0.0.1:8000/api/v1/cabins?page=${page}&discountPercentage[gte]=${filter}`
+    );
 
-    return data.data.cabins;
+    return data.data;
   } catch (err) {
     throw new Error("Cabin could not be loaded");
   }

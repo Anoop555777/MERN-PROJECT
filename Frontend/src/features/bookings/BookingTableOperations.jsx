@@ -8,31 +8,31 @@ const TableOperations = styled.div`
   align-items: center;
   gap: 2.4rem;
 `;
-const CabinTableOperations = () => {
+const BookingTableOperations = () => {
   return (
     <TableOperations>
       <Menus>
         <Filter
-          filterField="discount[gte]"
+          filterField="status"
           query="filter"
           options={[
-            { value: "0", label: "All" },
-            { value: "40", label: "Discount more than 40%" },
-            { value: "20", label: "Discount more than 20%" },
-            { value: "10", label: "Discount more than 10%" },
+            { value: "all", label: "all" },
+            { value: "checked-out", label: "checked-out" },
+            { value: "checked-in", label: "checked-in" },
+            { value: "unconfirmed", label: "unconfirmed" },
           ]}
         />
         <SortBy
           filterField="sortBy"
           query="sort"
           options={[
-            { value: "name-desc", label: "Sort by name" },
-            { value: "name-asc", label: "Sort by name" },
+            { value: "startDate-desc", label: "Sort by date (recent first)" },
+            { value: "startDate-asc", label: "Sort by date (earlier first)" },
             {
-              value: "price-desc",
+              value: "totalPrice-desc",
               label: "Sort by amount (high first)",
             },
-            { value: "price-asc", label: "Sort by amount (low first)" },
+            { value: "totalPrice-asc", label: "Sort by amount (low first)" },
           ]}
         />
       </Menus>
@@ -40,4 +40,4 @@ const CabinTableOperations = () => {
   );
 };
 
-export default CabinTableOperations;
+export default BookingTableOperations;

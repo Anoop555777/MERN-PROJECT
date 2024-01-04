@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { getCabin } from "../services/apiCabins";
+import { getCabin } from "../../services/apiCabins";
 
 const useCabinDetail = () => {
   const { cabinId } = useParams();

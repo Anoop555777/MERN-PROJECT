@@ -79,11 +79,25 @@ exports.getAllCabins = catchAsync(async function (req, res, next) {
     .pagination();
 
   const cabins = await features.query;
+  const filterCabinSize = await features.query.explain();
+  const totalCabins = await Cabin.countDocuments();
+  const {
+    executionStats: {
+      executionStages: {
+        inputStage: {
+          inputStage: { nReturned: noOfFilterCabins },
+        },
+      },
+    },
+  } = filterCabinSize[0];
+
   res.status(200).json({
     status: "success",
     result: cabins.length,
     data: {
       cabins,
+      noOfFilterCabins,
+      totalCabins,
     },
   });
 });

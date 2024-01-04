@@ -61,10 +61,10 @@ const userSchema = new mongoose.Schema({
     required: [true, "National Id is required"],
     lowercase: true,
   },
-  // countryFlag: {
-  //   type: String,
-  //   default: "https://flagcdn.com/in.svg",
-  // },
+  countryFlag: {
+    type: String,
+    default: "https://flagcdn.com/in.svg",
+  },
 });
 
 userSchema.pre("save", async function (next) {
