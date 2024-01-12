@@ -60,6 +60,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "National Id is required"],
     lowercase: true,
+    default: "indian",
   },
   countryFlag: {
     type: String,

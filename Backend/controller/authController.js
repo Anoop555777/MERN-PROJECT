@@ -37,15 +37,16 @@ const sendToken = (res, user, statusCode) => {
 };
 
 exports.signIn = catchAsync(async function (req, res, next) {
+  console.log(req.body);
   const obj = {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword,
     nationalId: req.body.nationalId,
-    nationality: req.body.nationality,
   };
 
+  if (req.body.nationality) obj.nationality = req.body.nationality;
   const user = await User.create(obj);
 
   sendToken(res, user, 201);
@@ -193,3 +194,41 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   const userUpdateInfo = await User.findById(user._id);
   sendToken(res, userUpdateInfo, 200);
 });
+
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      // 1) verify token
+
+      const decoded = await util.promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+      // 2) Check if user still exists
+      const currentUser = await User.findById(decoded.id).select("+role");
+
+      if (!currentUser) {
+        return next();
+      }
+      // 3) Check if user changed password after the token was issued
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      }
+
+      // THERE IS A LOGGED IN U
+
+      res.status(200).json({
+        status: "success",
+        user: {
+          name: currentUser.name,
+          email: currentUser.email,
+          role: currentUser.role,
+        },
+      });
+    } catch (err) {
+      return next();
+    }
+  }
+  next();
+};

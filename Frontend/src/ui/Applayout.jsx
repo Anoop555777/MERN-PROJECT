@@ -2,7 +2,10 @@ import { Outlet } from "react-router-dom";
 import SideBar from "./SideBar";
 import Header from "./Header";
 import styled from "styled-components";
-
+import useIsLoggedIn from "../features/authentication/useIsLoggedIn";
+import { useEffect } from "react";
+import Spinner from "./../ui/Spinner";
+import { useUser } from "./../store/UserContext";
 const StyledLayout = styled.div`
   display: grid;
   grid-template-columns: 26rem 1fr;
@@ -37,6 +40,18 @@ const Main = styled.main`
 `;
 
 const Applayout = () => {
+  const { isAuthenticated, isLoggedInLoading, user } = useIsLoggedIn();
+  const { setUser, setIsAuthenticated } = useUser();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setUser(user);
+      setIsAuthenticated(isAuthenticated);
+    }
+  }, [isAuthenticated]);
+
+  if (isLoggedInLoading) return <Spinner />;
+
   return (
     <StyledLayout>
       <Header />

@@ -9,14 +9,23 @@ import { useMoveBack } from "../../hooks/useMoveBack";
 import BookingDataBox from "./BookingDataBox";
 import ButtonGroup from "./../../ui/ButtonGroup";
 import Button from "./../../ui/Button";
+import { useNavigate } from "react-router-dom";
+import useCheckOut from "../check-in-out/useCheckout";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import useDeleteBooking from "./useDeleteBooking";
+
 const HeadingGroup = styled.div`
   display: flex;
   gap: 2.4rem;
   align-items: center;
 `;
 const BookingDetail = () => {
+  const navigate = useNavigate();
   const moveBack = useMoveBack();
+  const { checkout, isCheckingOut } = useCheckOut();
   const { isLoading, booking } = useBooking();
+  const { isDeleting, deleteBookingMutate } = useDeleteBooking();
   if (isLoading) return <Spinner />;
   const { status, _id: bookingId } = booking;
   const statusToTagName = {
@@ -35,6 +44,33 @@ const BookingDetail = () => {
       </Row>
       <BookingDataBox booking={booking} />
       <ButtonGroup>
+        {status === "unconfirmed" && (
+          <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
+            <span>Check In</span>
+          </Button>
+        )}
+
+        {status === "checked-in" && (
+          <Button disabled={isCheckingOut} onClick={() => checkout(bookingId)}>
+            <span>Check Out</span>
+          </Button>
+        )}
+        <Modal>
+          <Modal.Open opens="delete">
+            <Button variation="danger">Delete Booking</Button>
+          </Modal.Open>
+          <Modal.Window name="delete">
+            <ConfirmDelete
+              resource="booking"
+              disabled={isDeleting}
+              onConfirm={() => {
+                deleteBookingMutate(bookingId, {
+                  onSettled: () => navigate(-1),
+                });
+              }}
+            />
+          </Modal.Window>
+        </Modal>
         <Button variation="secondary" onClick={moveBack}>
           Back
         </Button>

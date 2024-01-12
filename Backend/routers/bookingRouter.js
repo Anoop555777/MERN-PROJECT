@@ -15,6 +15,10 @@ router
     bookingController.getAllBookings
   );
 
-router.route("/:bookingId").get(bookingController.getBooking);
+router
+  .route("/:bookingId")
+  .get(bookingController.getBooking)
+  .patch(bookingController.updateBooking)
+  .delete(bookingController.deleteBooking);
 
 module.exports = router;

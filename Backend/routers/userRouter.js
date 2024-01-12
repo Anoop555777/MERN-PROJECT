@@ -5,8 +5,9 @@ const bookingRouter = require("./../routers/bookingRouter");
 const router = express.Router();
 router.use("/:userId/myBookings", bookingRouter);
 
-router.post("/signin", authController.signIn);
+router.post("/signup", authController.signIn);
 router.post("/login", authController.login);
+router.get("/isLoggedIn", authController.isLoggedIn);
 router.post("/forgetPassword", authController.forgetPassword);
 router.post("/resetPassword", authController.resetPassword);
 router.patch(

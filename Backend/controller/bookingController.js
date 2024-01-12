@@ -64,3 +64,26 @@ exports.getBooking = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.updateBooking = catchAsync(async (req, res, next) => {
+  const booking = await Booking.findByIdAndUpdate(
+    req.params.bookingId,
+    req.body
+  );
+  if (!booking) return next(new AppError("No booking found", 404));
+  res.status(200).json({
+    status: "success",
+    data: {
+      booking,
+    },
+  });
+});
+
+exports.deleteBooking = catchAsync(async (req, res, next) => {
+  const booking = await Booking.findByIdAndDelete(req.params.bookingId);
+  if (!booking) return next(new AppError("No booking found", 404));
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
