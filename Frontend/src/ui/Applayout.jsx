@@ -41,12 +41,15 @@ const Main = styled.main`
 
 const Applayout = () => {
   const { isAuthenticated, isLoggedInLoading, user } = useIsLoggedIn();
-  const { setUser, setIsAuthenticated } = useUser();
-
+  console.log(isAuthenticated);
+  const { user: a, setUser, setIsAuthenticated } = useUser();
   useEffect(() => {
     if (isAuthenticated) {
       setUser(user);
       setIsAuthenticated(isAuthenticated);
+    } else {
+      setUser(null);
+      setIsAuthenticated(null);
     }
   }, [isAuthenticated]);
 

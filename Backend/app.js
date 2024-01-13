@@ -14,12 +14,14 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const settingRouter = require("./routers/settingRouter");
 app.use(helmet());
+
 app.use(
   express.json({
     limit: "10kb",
   })
 );
 app.use(cookieParser());
+
 app.use(cors());
 const limit = rateLimit({
   max: 100,

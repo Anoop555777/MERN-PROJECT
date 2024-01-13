@@ -16,14 +16,15 @@ const sendToken = (res, user, statusCode) => {
   const token = generateToken(user);
   const cookieOptions = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+      Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
   };
 
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
-  res.cookie("JWT", token, cookieOptions);
+  res.cookie("jwt", token, cookieOptions);
+  res.locals.user = user;
 
   user.password = undefined;
 
@@ -202,7 +203,7 @@ exports.isLoggedIn = async (req, res, next) => {
 
       const decoded = await util.promisify(jwt.verify)(
         req.cookies.jwt,
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET_KEY
       );
 
       // 2) Check if user still exists
@@ -211,6 +212,7 @@ exports.isLoggedIn = async (req, res, next) => {
       if (!currentUser) {
         return next();
       }
+
       // 3) Check if user changed password after the token was issued
       if (currentUser.changedPasswordAfter(decoded.iat)) {
         return next();
@@ -231,4 +233,13 @@ exports.isLoggedIn = async (req, res, next) => {
     }
   }
   next();
+};
+
+exports.logout = (req, res, next) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10),
+    httpOnly: true,
+  });
+
+  res.status(200).json({ status: "success", data: null });
 };

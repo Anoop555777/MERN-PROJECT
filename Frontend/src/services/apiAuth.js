@@ -28,3 +28,12 @@ export async function login(loginData) {
     throw new Error(err.response.data.message);
   }
 }
+
+export async function logout() {
+  try {
+    await axios(`http://127.0.0.1:8000/api/v1/users/logout`);
+    return null;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}

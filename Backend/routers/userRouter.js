@@ -7,7 +7,8 @@ router.use("/:userId/myBookings", bookingRouter);
 
 router.post("/signup", authController.signIn);
 router.post("/login", authController.login);
-router.get("/isLoggedIn", authController.isLoggedIn);
+router.get("/logout", authController.logout);
+router.route("/isLoggedin").get(authController.isLoggedIn);
 router.post("/forgetPassword", authController.forgetPassword);
 router.post("/resetPassword", authController.resetPassword);
 router.patch(
