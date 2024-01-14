@@ -76,7 +76,6 @@ exports.logout = (req, res) => {
 };
 
 exports.protectRoute = catchAsync(async function (req, res, next) {
-  console.log(req.cookie);
   let token;
   if (req.cookies.jwt) token = req.cookies.jwt;
   else if (
@@ -104,14 +103,13 @@ exports.protectRoute = catchAsync(async function (req, res, next) {
 
   //if the user have change the password after login
 
-  if (freshUser.changePasswordAfter(decoded.iat))
+  if (freshUser.changedPasswordAfter(decoded.iat))
     return next(
       new AppError("user have change the password  please log in again", 401)
     );
 
   //next will grant excess to private reoutes
   req.user = freshUser;
-  console.log(freshUser);
   next();
 });
 

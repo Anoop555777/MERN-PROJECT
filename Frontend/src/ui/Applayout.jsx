@@ -40,16 +40,16 @@ const Main = styled.main`
 `;
 
 const Applayout = () => {
-  const { isLoggedInLoading, user, isAuthenticated } = useIsLoggedIn();
+  const { isLoggedInLoading, user } = useIsLoggedIn();
 
   const { setUser, setIsAuthenticated } = useUser();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (user) {
       setUser(user);
       setIsAuthenticated(true);
     }
-  }, [isAuthenticated]);
+  }, [user]);
 
   if (isLoggedInLoading) return <Spinner />;
 

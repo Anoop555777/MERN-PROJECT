@@ -37,7 +37,7 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     })
     .toFormat("jpeg")
     .jpeg({ quality: 90 })
-    .toFile(`Frontend/vite-project/public/img/${req.file.filename}`);
+    .toFile(`Frontend/public/data/img/users/${req.file.filename}`);
   next();
 });
 
@@ -58,7 +58,7 @@ exports.userMe = catchAsync(async (req, res, next) => {
     return next(new AppError("this is a wrong route", 400));
 
   const filterBody = filterObj(req.body, "name", "email");
-  if (req.file) filterBody.photo = `img/${req.file.filename}`;
+  if (req.file) filterBody.photo = `${req.file.filename}`;
   const updateUser = await User.findByIdAndUpdate(req.user._id, filterBody, {
     new: true,
     runValidators: true,
