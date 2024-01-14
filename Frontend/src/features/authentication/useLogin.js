@@ -16,6 +16,9 @@ const useLogin = () => {
         id: data.user._id,
         role: data.user.role,
         photo: data.user.photo,
+        nationalId: data.user.nationalId,
+        nationality: data.user.nationality,
+        countryFlag: data.user.countryFlag,
       });
       toast.success("login in successfully");
       navigate("/");

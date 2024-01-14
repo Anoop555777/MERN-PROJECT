@@ -3,7 +3,7 @@ export async function createBooking(bookingData) {
   try {
     const { data } = await axios({
       method: "POST",
-      url: "http://127.0.0.1:8000/api/v1/bookings",
+      url: "/api/v1/bookings",
       data: bookingData,
     });
     return data;
@@ -15,9 +15,9 @@ export async function createBooking(bookingData) {
 export async function getAllBookings({ page, field }) {
   let url;
   if (field === "all") {
-    url = `http://127.0.0.1:8000/api/v1/bookings?page=${page}`;
+    url = `/api/v1/bookings?page=${page}`;
   } else {
-    url = `http://127.0.0.1:8000/api/v1/bookings?status=${field}&page=${page}`;
+    url = `/api/v1/bookings?status=${field}&page=${page}`;
   }
   try {
     const { data } = await axios({
@@ -31,7 +31,7 @@ export async function getAllBookings({ page, field }) {
 }
 
 export async function getBooking(bookingId) {
-  const url = `http://127.0.0.1:8000/api/v1/bookings/${bookingId}`;
+  const url = `/api/v1/bookings/${bookingId}`;
 
   try {
     const { data } = await axios({
@@ -45,7 +45,7 @@ export async function getBooking(bookingId) {
 }
 
 export async function updateBooking(bookingId, bookingData) {
-  const url = `http://127.0.0.1:8000/api/v1/bookings/${bookingId}`;
+  const url = `/api/v1/bookings/${bookingId}`;
 
   try {
     const { data } = await axios({
@@ -61,7 +61,7 @@ export async function updateBooking(bookingId, bookingData) {
 
 export async function deleteBooking(bookingId) {
   console.log(bookingId);
-  const url = `http://127.0.0.1:8000/api/v1/bookings/${bookingId}`;
+  const url = `/api/v1/bookings/${bookingId}`;
 
   try {
     await axios({

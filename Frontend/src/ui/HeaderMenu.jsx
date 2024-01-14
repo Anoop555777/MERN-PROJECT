@@ -3,6 +3,7 @@ import ButtonIcon from "./ButtonIcon";
 import { HiOutlineUser } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import LogButton from "../features/authentication/LogButton";
+import { useUser } from "../store/UserContext";
 const StyledHeaderMenu = styled.ul`
   display: flex;
   gap: 1rem;
@@ -10,12 +11,15 @@ const StyledHeaderMenu = styled.ul`
 
 const HeaderMenu = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useUser();
   return (
     <StyledHeaderMenu>
       <li>
-        <ButtonIcon onClick={() => navigate("account")}>
-          <HiOutlineUser />
-        </ButtonIcon>
+        {isAuthenticated && (
+          <ButtonIcon onClick={() => navigate("account")}>
+            <HiOutlineUser />
+          </ButtonIcon>
+        )}
       </li>
       <li>
         <LogButton />

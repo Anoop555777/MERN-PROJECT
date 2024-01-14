@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useUser } from "../../store/UserContext";
 
 const StyledUserAvatar = styled.div`
   display: flex;
@@ -21,10 +22,12 @@ const Avatar = styled.img`
 `;
 
 const UserAvatar = () => {
+  const { user } = useUser();
+  if (!user?.name) return null;
   return (
     <StyledUserAvatar>
-      <Avatar src="data/img/users/default-user.jpg"></Avatar>
-      <span>Anoop</span>
+      <Avatar src={`data/img/users/${user.photo}`}></Avatar>
+      <span>{user.name}</span>
     </StyledUserAvatar>
   );
 };

@@ -76,6 +76,7 @@ exports.logout = (req, res) => {
 };
 
 exports.protectRoute = catchAsync(async function (req, res, next) {
+  console.log(req.cookie);
   let token;
   if (req.cookies.jwt) token = req.cookies.jwt;
   else if (
@@ -110,6 +111,7 @@ exports.protectRoute = catchAsync(async function (req, res, next) {
 
   //next will grant excess to private reoutes
   req.user = freshUser;
+  console.log(freshUser);
   next();
 });
 
@@ -226,6 +228,10 @@ exports.isLoggedIn = async (req, res, next) => {
           name: currentUser.name,
           email: currentUser.email,
           role: currentUser.role,
+          nationalId: currentUser.nationalId,
+          nationality: currentUser.nationality,
+          photo: currentUser.photo,
+          countryFlag: currentUser.countryFlag,
         },
       });
     } catch (err) {

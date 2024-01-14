@@ -3,7 +3,7 @@ import axios from "axios";
 export async function getCabins({ page, filter }) {
   try {
     const { data } = await axios(
-      `http://127.0.0.1:8000/api/v1/cabins?page=${page}&discountPercentage[gte]=${filter}`
+      `/api/v1/cabins?page=${page}&discountPercentage[gte]=${filter}`
     );
 
     return data.data;
@@ -14,7 +14,7 @@ export async function getCabins({ page, filter }) {
 
 export async function getCabin(id) {
   try {
-    const { data } = await axios(`http://127.0.0.1:8000/api/v1/cabins/${id}`);
+    const { data } = await axios(`/api/v1/cabins/${id}`);
 
     return data.data.cabin;
   } catch (err) {
@@ -26,7 +26,7 @@ export async function deleteCabin(id) {
   try {
     await axios({
       method: "DELETE",
-      url: `http://127.0.0.1:8000/api/v1/cabins/${id}`,
+      url: `/api/v1/cabins/${id}`,
     });
     return null;
   } catch (err) {
@@ -39,7 +39,7 @@ export async function createCabin(cabinData) {
   try {
     const { data } = await axios({
       method: "POST",
-      url: "http://127.0.0.1:8000/api/v1/cabins",
+      url: "/api/v1/cabins",
       data: cabinData,
     });
     return data;
@@ -53,7 +53,7 @@ export async function editCabin(id, data) {
   try {
     const { data } = await axios({
       method: "PATCH",
-      url: `http://127.0.0.1:8000/api/v1/cabins/${id}`,
+      url: `/api/v1/cabins/${id}`,
       data: editData,
     });
     return data;

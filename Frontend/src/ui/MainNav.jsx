@@ -6,7 +6,9 @@ import {
   HiOutlineHome,
   HiOutlineHomeModern,
   HiOutlineUsers,
+  HiOutlineUser,
 } from "react-icons/hi2";
+import { useUser } from "../store/UserContext";
 
 const NavList = styled.ul`
   display: flex;
@@ -86,6 +88,7 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const MainNav = () => {
+  const { isAuthenticated } = useUser();
   return (
     <nav>
       <NavList>
@@ -115,6 +118,14 @@ const MainNav = () => {
             <span>Users</span>
           </StyledNavLink>
         </List>
+        {isAuthenticated && (
+          <List>
+            <StyledNavLink to="/account">
+              <HiOutlineUser />
+              <span>Account</span>
+            </StyledNavLink>
+          </List>
+        )}
         <List>
           <StyledNavLink to="/settings">
             <HiOutlineCog6Tooth />

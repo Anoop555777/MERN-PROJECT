@@ -4,7 +4,7 @@ export async function signup(signInData) {
   try {
     const { data } = await axios({
       method: "POST",
-      url: `http://127.0.0.1:8000/api/v1/users/signup`,
+      url: `/api/v1/users/signup`,
       data: signInData,
     });
 
@@ -19,7 +19,7 @@ export async function login(loginData) {
   try {
     const { data } = await axios({
       method: "POST",
-      url: `http://127.0.0.1:8000/api/v1/users/login`,
+      url: `/api/v1/users/login`,
       data: loginData,
     });
 
@@ -31,7 +31,7 @@ export async function login(loginData) {
 
 export async function logout() {
   try {
-    await axios(`http://127.0.0.1:8000/api/v1/users/logout`);
+    await axios(`/api/v1/users/logout`);
     return null;
   } catch (err) {
     throw new Error(err.response.data.message);
