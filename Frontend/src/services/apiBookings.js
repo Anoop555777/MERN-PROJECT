@@ -1,4 +1,6 @@
 import axios from "axios";
+
+import { getToday } from "../utiles/helper";
 export async function createBooking(bookingData) {
   try {
     const { data } = await axios({
@@ -24,7 +26,7 @@ export async function getAllBookings({ page, field }) {
       method: "GET",
       url: url,
     });
-    return data.data;
+    return data.data.booking;
   } catch (err) {
     throw new Error(err);
   }
@@ -60,7 +62,6 @@ export async function updateBooking(bookingId, bookingData) {
 }
 
 export async function deleteBooking(bookingId) {
-  console.log(bookingId);
   const url = `/api/v1/bookings/${bookingId}`;
 
   try {
@@ -71,5 +72,33 @@ export async function deleteBooking(bookingId) {
     return null;
   } catch (err) {
     throw new Error(err);
+  }
+}
+
+export async function getBookingsAfterDate(date) {
+  console.log(date);
+  try {
+    const { data } = await axios.get(
+      `/api/v1/bookings?createdAt[gte]=${date}&createdAt[lte]=${getToday({
+        end: true,
+      })}`
+    );
+    return data.data.bookings;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getStaysAfterDate(date) {
+  console.log(date);
+  try {
+    const { data } = await axios.get(
+      `/api/v1/bookings?startDate[gte]=${date}&startDate[lte]=${getToday({
+        end: true,
+      })}`
+    );
+    return data.data.bookings;
+  } catch (err) {
+    throw new Error(err.message);
   }
 }
