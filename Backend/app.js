@@ -23,12 +23,7 @@ app.use(
 app.use(cookieParser());
 
 app.use(cors());
-const limit = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: "To many request from the same IP please try again in an hour.",
-});
-app.use("/api", limit);
+
 app.use(mongoSantization());
 app.use(xssClean());
 app.use(hpp());

@@ -15,6 +15,8 @@ router
     bookingController.getAllBookings
   );
 
+router.route("/todayactivitys").get(bookingController.todayActivitys);
+
 router
   .route("/:bookingId")
   .get(bookingController.getBooking)

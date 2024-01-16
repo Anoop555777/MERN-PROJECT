@@ -87,3 +87,36 @@ exports.deleteBooking = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+exports.todayActivitys = catchAsync(async (req, res, next) => {
+  console.log();
+
+  const bookings = await Booking.find({
+    $or: [
+      {
+        status: "unconfirmed",
+        startDate: {
+          $gte: new Date(Date.now() - new Date().getHours()).toISOString(),
+        },
+        startDate: {
+          $lt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        },
+      },
+      {
+        status: "checked-in",
+        endDate: {
+          $gte: new Date(Date.now() - new Date().getHours()).toISOString(),
+        },
+        end: {
+          $lt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        },
+      },
+    ],
+  });
+  res.status(201).json({
+    status: "success",
+    data: {
+      bookings,
+    },
+  });
+});

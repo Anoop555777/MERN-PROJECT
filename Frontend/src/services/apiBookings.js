@@ -26,7 +26,7 @@ export async function getAllBookings({ page, field }) {
       method: "GET",
       url: url,
     });
-    return data.data.booking;
+    return data.data;
   } catch (err) {
     throw new Error(err);
   }
@@ -76,7 +76,6 @@ export async function deleteBooking(bookingId) {
 }
 
 export async function getBookingsAfterDate(date) {
-  console.log(date);
   try {
     const { data } = await axios.get(
       `/api/v1/bookings?createdAt[gte]=${date}&createdAt[lte]=${getToday({
@@ -90,13 +89,21 @@ export async function getBookingsAfterDate(date) {
 }
 
 export async function getStaysAfterDate(date) {
-  console.log(date);
   try {
     const { data } = await axios.get(
       `/api/v1/bookings?startDate[gte]=${date}&startDate[lte]=${getToday({
         end: true,
       })}`
     );
+    return data.data.bookings;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getStaysTodayActivity() {
+  try {
+    const { data } = await axios.get(`/api/v1/bookings/todayactivitys`);
     return data.data.bookings;
   } catch (err) {
     throw new Error(err.message);

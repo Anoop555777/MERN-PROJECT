@@ -4,6 +4,7 @@ const useIsLoggedIn = () => {
   const { isLoading: isLoggedInLoading, data: user } = useQuery({
     queryFn: isLoggedIn,
     queryKey: ["user"],
+    retry: false,
   });
   return { isLoggedInLoading, user, isAuthenticated: user?.name };
 };

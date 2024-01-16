@@ -11,9 +11,8 @@ const CabinTable = () => {
   const [searchParam] = useSearchParams();
   if (isLoading) return <Spinner />;
   //1>filter
-  const { cabins, noOfcabins, totalCabins } = cabinsData;
+  const { cabins, noOfFilterCabins, totalCabins } = cabinsData;
   const filter = searchParam.get("discount[gte]");
-  console.log(cabins);
 
   //2> sortBy
   const sortBy = searchParam.get("sortBy") || "name-asc";
@@ -45,10 +44,10 @@ const CabinTable = () => {
         <Table.Footer>
           <Pagination
             count={
-              filter
+              filter && filter !== "0"
                 ? sortedCabins.length === 0
                   ? 0
-                  : noOfcabins
+                  : noOfFilterCabins
                 : totalCabins
             }
           />

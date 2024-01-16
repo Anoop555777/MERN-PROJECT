@@ -61,7 +61,7 @@ const CreateBookingForm = ({ onCloseModal, cabin }) => {
           name="startDate"
           rules={{
             validate: () =>
-              subtractDates(startDate, endDate) > 1
+              subtractDates(startDate, endDate) > 0
                 ? subtractDates(new Date(), startDate) >= 0 ||
                   "startDate must be greater than present date"
                 : "StartDate must be less than EndDate",
