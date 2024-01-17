@@ -1248,7 +1248,7 @@ to {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-`,Cye=({cabin:e})=>{const{imageCover:t,name:r}=e,n="../Frontend/dist/"+t;console.log(n);const[a,i=""]=r.split(" ");return x.jsx(Eye,{img:n,children:x.jsxs(_ye,{children:[x.jsx("span",{children:a}),x.jsx("span",{children:i})]})})},Aye=()=>{const{cabinId:e}=eD(),{isLoading:t,data:r}=Ja({queryKey:["cabin",e],queryFn:()=>mU(e),retry:!1});return{isLoading:t,cabin:r}};var SI={exports:{}};/*!
+`,Cye=({cabin:e})=>{const{imageCover:t,name:r}=e,n="../"+t,[a,i=""]=r.split(" ");return x.jsx(Eye,{img:n,children:x.jsxs(_ye,{children:[x.jsx("span",{children:a}),x.jsx("span",{children:i})]})})},Aye=()=>{const{cabinId:e}=eD(),{isLoading:t,data:r}=Ja({queryKey:["cabin",e],queryFn:()=>mU(e),retry:!1});return{isLoading:t,cabin:r}};var SI={exports:{}};/*!
 	Copyright (c) 2018 Jed Watson.
 	Licensed under the MIT License (MIT), see
 	http://jedwatson.github.io/classnames
