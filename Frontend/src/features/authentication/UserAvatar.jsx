@@ -26,7 +26,7 @@ const UserAvatar = () => {
   if (!user?.name) return null;
   return (
     <StyledUserAvatar>
-      <Avatar src={`data/img/users/${user.photo}`}></Avatar>
+      <Avatar src={`../data/img/users/${user.photo}`}></Avatar>
       <span>{user.name}</span>
     </StyledUserAvatar>
   );
