@@ -46,7 +46,8 @@ const Heading = styled.h1`
 
 const CabinHeader = ({ cabin }) => {
   const { imageCover, name } = cabin;
-  const img = "./../Frontend/dist/" + imageCover;
+  const img = "../Frontend/dist/" + imageCover;
+  console.log(img);
   const [firstName, lastName = ""] = name.split(" ");
   return (
     <StyledCabinHeader img={img}>
