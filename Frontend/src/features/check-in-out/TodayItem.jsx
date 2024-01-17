@@ -32,9 +32,12 @@ function TodayItem({ activity }) {
     <StyledTodayItem>
       {status === "unconfirmed" && <Tag type="green">Arriving</Tag>}
       {status === "checked-in" && <Tag type="blue">Departing</Tag>}
-
-      <Flag src={guests.countryFlag} alt={`Flag of ${guests.country}`} />
-      <Guest>{guests.fullName}</Guest>
+      <Flag
+        src={guests.countryFlag}
+        crossorigin="anonymous"
+        alt={`Flag of ${guests.nationality}`}
+      />
+      <Guest>{guests.name}</Guest>
       <div>{numNights} nights</div>
 
       {status === "unconfirmed" && (

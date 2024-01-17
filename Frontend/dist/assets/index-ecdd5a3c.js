@@ -511,7 +511,7 @@ to {
   }
 `,Zhe=q.div`
   font-weight: 500;
-`;function Jhe({activity:e}){const{_id:t,status:r,user:n,numNights:a}=e;return x.jsxs(Xhe,{children:[r==="unconfirmed"&&x.jsx(nm,{type:"green",children:"Arriving"}),r==="checked-in"&&x.jsx(nm,{type:"blue",children:"Departing"}),x.jsx(XN,{src:n.countryFlag,alt:`Flag of ${n.country}`}),x.jsx(Zhe,{children:n.fullName}),x.jsxs("div",{children:[a," nights"]}),r==="unconfirmed"&&x.jsx(At,{size:"small",variation:"primary",as:Mm,to:`/checkin/${t}`,children:"Check in"}),r==="checked-in"&&x.jsx(Qhe,{bookingId:id})]})}const eme=q.div`
+`;function Jhe({activity:e}){const{_id:t,status:r,user:n,numNights:a}=e;return x.jsxs(Xhe,{children:[r==="unconfirmed"&&x.jsx(nm,{type:"green",children:"Arriving"}),r==="checked-in"&&x.jsx(nm,{type:"blue",children:"Departing"}),x.jsx(XN,{src:n.countryFlag,crossorigin:"anonymous",alt:`Flag of ${n.nationality}`}),x.jsx(Zhe,{children:n.name}),x.jsxs("div",{children:[a," nights"]}),r==="unconfirmed"&&x.jsx(At,{size:"small",variation:"primary",as:Mm,to:`/checkin/${t}`,children:"Check in"}),r==="checked-in"&&x.jsx(Qhe,{bookingId:id})]})}const eme=q.div`
   /* Box */
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
@@ -957,7 +957,7 @@ to {
   min-height: 100dvh;
   width: 100%;
   position: relative;
-  background: url("./../../public/data/img/cabin/cabin-photo1.jpg");
+  background: url("./../data/img/cabin/cabin-photo1.jpg");
   background-size: cover;
   background-position: bottom;
   opacity: 0.9;
@@ -1357,7 +1357,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   font-size: 1.2rem;
   color: var(--color-grey-500);
   text-align: right;
-`;function QI({booking:e}){const{createdAt:t,startDate:r,endDate:n,numNights:a,numGuests:i,cabin:{price:o},extraPrice:s,totalPrice:u,hasBreakFast:l,observations:c,isPaid:f,user:{name:d,email:p,nationality:h,countryFlag:m,nationalId:v},cabin:{name:g}}=e;return x.jsxs(H0e,{children:[x.jsxs(Y0e,{children:[x.jsxs("div",{children:[x.jsx(B$,{}),x.jsxs("p",{children:[a," nights in Cabin ",x.jsx("span",{children:g})]})]}),x.jsxs("p",{children:[ua(new Date(r),"EEE, MMM dd yyyy")," (",o$(new Date(r))?"Today":T$(r),") — ",ua(new Date(n),"EEE, MMM dd yyyy")]})]}),x.jsxs(q0e,{children:[x.jsxs(V0e,{children:[m&&x.jsx(XN,{src:m,alt:`Flag of ${h}`}),x.jsxs("p",{children:[d," ",i>1?`+ ${i-1} guests`:""]}),x.jsx("span",{children:"•"}),x.jsx("p",{children:p}),x.jsx("span",{children:"•"}),x.jsxs("p",{children:["National ID ",v]})]}),c&&x.jsx(Pg,{icon:x.jsx(tU,{}),label:"Observations",children:c}),x.jsx(Pg,{icon:x.jsx(rU,{}),label:"Breakfast included?",children:l?"Yes":"No"}),x.jsxs(K0e,{isPaid:f,children:[x.jsxs(Pg,{icon:x.jsx(aU,{}),label:"Total price",children:[dn(u),l&&` (${dn(o)} cabin + ${dn(s)} breakfast)`]}),x.jsx("p",{children:f?"Paid":"Will pay at property"})]})]}),x.jsx(G0e,{children:x.jsxs("p",{children:["Booked ",ua(new Date(t),"EEE, MMM dd yyyy, p")]})})]})}const XI=q.div`
+`;function QI({booking:e}){const{createdAt:t,startDate:r,endDate:n,numNights:a,numGuests:i,cabin:{price:o},extraPrice:s,totalPrice:u,hasBreakFast:l,observations:c,isPaid:f,user:{name:d,email:p,nationality:h,countryFlag:m,nationalId:v},cabin:{name:g}}=e;return x.jsxs(H0e,{children:[x.jsxs(Y0e,{children:[x.jsxs("div",{children:[x.jsx(B$,{}),x.jsxs("p",{children:[a," nights in Cabin ",x.jsx("span",{children:g})]})]}),x.jsxs("p",{children:[ua(new Date(r),"EEE, MMM dd yyyy")," (",o$(new Date(r))?"Today":T$(r),") — ",ua(new Date(n),"EEE, MMM dd yyyy")]})]}),x.jsxs(q0e,{children:[x.jsxs(V0e,{children:[m&&x.jsx(XN,{src:m,crossorigin:"anonymous",alt:"Flag "}),x.jsxs("p",{children:[d," ",i>1?`+ ${i-1} guests`:""]}),x.jsx("span",{children:"•"}),x.jsx("p",{children:p}),x.jsx("span",{children:"•"}),x.jsxs("p",{children:["National ID ",v]})]}),c&&x.jsx(Pg,{icon:x.jsx(tU,{}),label:"Observations",children:c}),x.jsx(Pg,{icon:x.jsx(rU,{}),label:"Breakfast included?",children:l?"Yes":"No"}),x.jsxs(K0e,{isPaid:f,children:[x.jsxs(Pg,{icon:x.jsx(aU,{}),label:"Total price",children:[dn(u),l&&` (${dn(o)} cabin + ${dn(s)} breakfast)`]}),x.jsx("p",{children:f?"Paid":"Will pay at property"})]})]}),x.jsx(G0e,{children:x.jsxs("p",{children:["Booked ",ua(new Date(t),"EEE, MMM dd yyyy, p")]})})]})}const XI=q.div`
   display: flex;
   gap: 1.2rem;
   justify-content: flex-end;
@@ -1481,7 +1481,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   min-height: 100dvh;
   width: 100%;
   position: relative;
-  background: url("./../../public/data/img/cabin/cabin-photo1.jpg");
+  background: url("./../data/img/cabin/cabin-photo1.jpg");
   background-size: cover;
   background-position: bottom;
   opacity: 0.9;

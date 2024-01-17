@@ -14,7 +14,12 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const settingRouter = require("./routers/settingRouter");
-app.use(helmet());
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 const limiter = rateLimit({
   max: 1000,

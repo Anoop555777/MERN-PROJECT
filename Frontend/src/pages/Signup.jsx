@@ -8,7 +8,7 @@ const SignupBackground = styled.main`
   min-height: 100dvh;
   width: 100%;
   position: relative;
-  background: url("./../../public/data/img/cabin/cabin-photo1.jpg");
+  background: url("./../data/img/cabin/cabin-photo1.jpg");
   background-size: cover;
   background-position: bottom;
   opacity: 0.9;
