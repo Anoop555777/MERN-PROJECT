@@ -56,7 +56,7 @@ const PaginationButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
-const PAGE_LIMIT = 5;
+const PAGE_LIMIT = 7;
 
 const Pagination = ({ count }) => {
   const [searchParams, setSearchParams] = useSearchParams();
